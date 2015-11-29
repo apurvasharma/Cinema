@@ -27,9 +27,11 @@ public class NewMoviesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.new_movie_list_fragment, container, false);
 
-        RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.new_movies_recycler_view);
+
+        RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.newMoviesRecyclerView);
         StaggeredGridLayoutManager mStaggeredLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(mStaggeredLayoutManager);
+
         NewMovieListAdapter newMovieListAdapter = new NewMovieListAdapter(getActivity());
         mRecyclerView.setAdapter(newMovieListAdapter);
 

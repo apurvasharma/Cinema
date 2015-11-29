@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFrag(new NewMoviesFragment(), "New");
-        adapter.addFrag(new UpcomingMoviesFragment(getResources().getColor(R.color.ripple_material_light)), "Upcoming");
+        adapter.addFrag(new UpcomingMoviesFragment(), "Upcoming");
              viewPager.setAdapter(adapter);
     }
 
