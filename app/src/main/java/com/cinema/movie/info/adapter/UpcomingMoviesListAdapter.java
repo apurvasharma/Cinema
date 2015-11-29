@@ -12,20 +12,20 @@ import android.widget.TextView;
 import com.cinema.movie.info.R;
 
 /**
- * Created by Apurva on 11/22/2015.
+ * Created by Apurva on 11/29/2015.
  */
-public class NewMovieListAdapter extends RecyclerView.Adapter<NewMovieListAdapter.ViewHolder> {
+public class UpcomingMoviesListAdapter extends RecyclerView.Adapter<UpcomingMoviesListAdapter.ViewHolder> {
 
     Context mContext;
 
 
-    public NewMovieListAdapter(Context context) {
+    public UpcomingMoviesListAdapter(Context context) {
         this.mContext = context;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.new_movie_single_row, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.upcoming_movie_single_row, parent, false);
         return new ViewHolder(view);
     }
 
@@ -38,23 +38,23 @@ public class NewMovieListAdapter extends RecyclerView.Adapter<NewMovieListAdapte
 
     @Override
     public int getItemCount() {
-      //  return new PlaceData().placeList().size();
+        //  return new PlaceData().placeList().size();
         return 0;
     }
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public LinearLayout newMovieHolder;
-        public LinearLayout newMovieNameHolder;
-        public TextView newMovieName;
-        public ImageView newMovieImage;
+        public LinearLayout upcomingMovieHolder;
+        public LinearLayout upcomingMovieNameHolder;
+        public TextView upcomingMovieName;
+        public ImageView upcomingMovieImage;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            newMovieHolder = (LinearLayout) itemView.findViewById(R.id.newMovieHolder);
-            newMovieName = (TextView) itemView.findViewById(R.id.newMovieName);
-            newMovieNameHolder = (LinearLayout) itemView.findViewById(R.id.newMovieNameHolder);
-            newMovieImage = (ImageView) itemView.findViewById(R.id.newMovieImage);
+            upcomingMovieHolder = (LinearLayout) itemView.findViewById(R.id.upcomingMovieHolder);
+            upcomingMovieName = (TextView) itemView.findViewById(R.id.upcomingMovieName);
+            upcomingMovieNameHolder = (LinearLayout) itemView.findViewById(R.id.upcomingMovieNameHolder);
+            upcomingMovieImage = (ImageView) itemView.findViewById(R.id.upcomingMovieImage);
         }
     }
 }

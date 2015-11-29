@@ -3,7 +3,6 @@ package com.cinema.movie.info.fragments;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
@@ -11,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cinema.movie.info.R;
-import com.cinema.movie.info.adapter.NewMovieListAdapter;
+import com.cinema.movie.info.adapter.NewMoviesListAdapter;
 
 /**
  * Created by Apurva on 11/22/2015.
@@ -32,8 +31,8 @@ public class NewMoviesFragment extends Fragment {
         StaggeredGridLayoutManager mStaggeredLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(mStaggeredLayoutManager);
 
-        NewMovieListAdapter newMovieListAdapter = new NewMovieListAdapter(getActivity());
-        mRecyclerView.setAdapter(newMovieListAdapter);
+        NewMoviesListAdapter newMoviesListAdapter = new NewMoviesListAdapter(getActivity());
+        mRecyclerView.setAdapter(newMoviesListAdapter);
 
         return view;
     }
