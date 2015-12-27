@@ -10,6 +10,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cinema.movie.info.R;
+import com.cinema.movie.info.model.Movies;
+
+import java.util.List;
 
 /**
  * Created by Apurva on 11/22/2015.
@@ -31,15 +34,18 @@ public class NewMoviesListAdapter extends RecyclerView.Adapter<NewMoviesListAdap
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-//        final Place place = new PlaceData().placeList().get(position);
-//        holder.placeName.setText(place.name);
-//        Picasso.with(mContext).load(place.getImageResourceId(mContext)).into(holder.placeImage);
+
     }
 
     @Override
     public int getItemCount() {
       //  return new PlaceData().placeList().size();
         return 0;
+    }
+
+    public void setNewMovieList(List<Movies> newMovieList) {
+        //update the adapter to display the list of new movies
+        notifyItemRangeChanged(0, newMovieList.size());
     }
 
 

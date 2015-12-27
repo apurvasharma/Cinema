@@ -1,6 +1,5 @@
 package com.cinema.movie.info.fragments;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
@@ -21,15 +20,21 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.cinema.movie.info.R;
 import com.cinema.movie.info.adapter.NewMoviesListAdapter;
+import com.cinema.movie.info.model.Movies;
+import com.cinema.movie.info.model.NewMovies;
 import com.cinema.movie.info.network.VolleySingleton;
 import com.cinema.movie.info.utils.AppConstants;
+import com.google.gson.Gson;
+
+import java.util.List;
 
 /**
  * Created by Apurva on 11/22/2015.
  */
 public class NewMoviesFragment extends Fragment {
     private ProgressBar progressBar;
-
+    private Gson gson = new Gson();
+    private NewMoviesListAdapter newMoviesListAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -41,10 +46,10 @@ public class NewMoviesFragment extends Fragment {
         StaggeredGridLayoutManager mStaggeredLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(mStaggeredLayoutManager);
 
-        NewMoviesListAdapter newMoviesListAdapter = new NewMoviesListAdapter(getActivity());
+        newMoviesListAdapter = new NewMoviesListAdapter(getActivity());
         mRecyclerView.setAdapter(newMoviesListAdapter);
 
-        makeNetworkRequest(AppConstants.URL);
+        makeNetworkRequest(AppConstants.NEW_MOVIES_URL + getString(R.string.api_key));
         return view;
     }
 
@@ -56,14 +61,14 @@ public class NewMoviesFragment extends Fragment {
         //start progress bar
         progressBar.setVisibility(View.VISIBLE);
 
-        // Request a string response from the provided URL.
+        // Request a string response from the provided NEW_MOVIES_URL.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         //stop progress bar
                         progressBar.setVisibility(View.GONE);
-                        //updateTvShowListAdapter(response);
+                        updateNewMovieListAdapter(response);
                         Log.d("response = ", response);
                     }
                 }, new Response.ErrorListener() {
@@ -92,5 +97,14 @@ public class NewMoviesFragment extends Fragment {
 
         // Add the request to the Volley RequestQueue
         requestQueue.add(stringRequest);
+    }
+
+    private void updateNewMovieListAdapter(String response) {
+        NewMovies newMovies = gson.fromJson(response, NewMovies.class);
+        List<Movies> newMovieList= newMovies.getMovies();
+        if (newMovieList != null) {
+            //update the adapter to display the parsed list
+            newMoviesListAdapter.setNewMovieList(newMovieList);
+        }
     }
 }
