@@ -6,3 +6,4 @@
 /build
 /captures
 app/app.iml
+/app/src/main/res/values/api_values.xml
