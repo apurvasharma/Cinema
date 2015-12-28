@@ -36,7 +36,7 @@ public class NewMoviesListAdapter extends RecyclerView.Adapter<NewMoviesListAdap
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.new_movie_single_row, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.new_movie_list_item, parent, false);
         return new ViewHolder(view);
     }
 
@@ -49,8 +49,6 @@ public class NewMoviesListAdapter extends RecyclerView.Adapter<NewMoviesListAdap
 
         //load image from JSON image URL
         String imageURL = movies.getPosters().getThumbnail();
-
-        holder.newMovieImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
 
         if (imageURL != null) {
             imageLoader.get(imageURL, new ImageLoader.ImageListener() {
