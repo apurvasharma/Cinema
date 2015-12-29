@@ -45,8 +45,8 @@ public class MainActivity extends AppCompatActivity
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFrag(new NewMoviesFragment(), "New");
-        adapter.addFrag(new UpcomingMoviesFragment(), "Upcoming");
+        adapter.addFrag(new NewMoviesFragment(), "In Theaters");
+        adapter.addFrag(new UpcomingMoviesFragment(), "Coming soon");
              viewPager.setAdapter(adapter);
     }
 
@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-    private void setUpFloatingActionButton() {
+    private void setUpFloatingActionButton() { 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

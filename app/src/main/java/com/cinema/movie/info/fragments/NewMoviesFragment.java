@@ -69,7 +69,7 @@ public class NewMoviesFragment extends Fragment {
                         //stop progress bar
                         progressBar.setVisibility(View.GONE);
                         updateNewMovieListAdapter(response);
-                        Log.d("response = ", response);
+                      //  Log.d("response = ", response);
                     }
                 }, new Response.ErrorListener() {
             @Override

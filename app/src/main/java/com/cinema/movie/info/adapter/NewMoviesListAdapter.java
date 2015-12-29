@@ -1,12 +1,16 @@
 package com.cinema.movie.info.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.LayerDrawable;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
@@ -47,6 +51,16 @@ public class NewMoviesListAdapter extends RecyclerView.Adapter<NewMoviesListAdap
         Movies movies = newMovieList.get(position);
         holder.newMovieTitle.setText(movies.getTitle());
 
+        //convert user-rating out of 5
+        float userRating = (movies.getRatings().getAudienceScore() * 5) / 100;
+
+        LayerDrawable layerDrawable = (LayerDrawable) holder.newMoviesRating.getProgressDrawable();
+        // DrawableCompat.setTint(DrawableCompat.wrap(layerDrawable.getDrawable(0)), Color.RED);   // Empty star
+        // DrawableCompat.setTint(DrawableCompat.wrap(layerDrawable.getDrawable(1)), Color.GREEN); // Partial star
+        DrawableCompat.setTint(DrawableCompat.wrap(layerDrawable.getDrawable(2)), Color.rgb(229, 193, 0)); // Full star
+
+        holder.newMoviesRating.setRating(userRating);
+
         //load image from JSON image URL
         String imageURL = movies.getPosters().getThumbnail();
 
@@ -83,16 +97,15 @@ public class NewMoviesListAdapter extends RecyclerView.Adapter<NewMoviesListAdap
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        // public LinearLayout newMovieHolder;
-        // public LinearLayout newMovieNameHolder;
+
         // public int newMovieId;
         public TextView newMovieTitle;
         public ImageView newMovieImage;
+        public RatingBar newMoviesRating;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            //   newMovieHolder = (LinearLayout) itemView.findViewById(R.id.newMovieHolder);
-            //  newMovieNameHolder = (LinearLayout) itemView.findViewById(R.id.newMovieNameHolder);
+            newMoviesRating = (RatingBar) itemView.findViewById(R.id.ratingBar);
             newMovieTitle = (TextView) itemView.findViewById(R.id.newMovieTitle);
             newMovieImage = (ImageView) itemView.findViewById(R.id.newMovieImage);
         }

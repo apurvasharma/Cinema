@@ -66,4 +66,6 @@ public class Movies {
         public NewMovies.Posters getPosters() {
                 return posters;
         }
+
+
 }

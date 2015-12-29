@@ -118,6 +118,9 @@ public class NewMovies {
         @Expose
         public Integer audienceScore;
 
+        public Integer getAudienceScore() {
+            return audienceScore;
+        }
     }
 
     public class ReleaseDates {
