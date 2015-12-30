@@ -19,4 +19,38 @@
         <item name="android:orientation">vertical</item>
     </style>
 
+    <style name="list_item_container">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:padding">15dp</item>
+        <item name="android:layout_marginBottom">1dp</item>
+        <item name="android:background">@color/listItemBackground</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="list_item_thumbnail">
+        <item name="android:scaleType">fitXY</item>
+        <item name="android:layout_width">60dp</item>
+        <item name="android:layout_height">80dp</item>
+    </style>
+
+    <style name="list_item_title">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/colorPrimaryText</item>
+        <item name="android:textAppearance">?attr/textAppearanceListItem</item>
+        <item name="android:layout_marginRight">18dp</item>
+        <item name="android:layout_marginLeft">18dp</item>
+
+    </style>
+
+    <style name="list_item_ratingBar" parent="android:Widget.Holo.Light.RatingBar.Small" >
+        <item name="android:isIndicator">true</item>
+        <item name="android:numStars">5</item>
+        <item name="android:stepSize">0.25</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+
 </resources>
