@@ -45,8 +45,8 @@ public class MainActivity extends AppCompatActivity
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFrag(new NewMoviesFragment(), "New");
-        adapter.addFrag(new UpcomingMoviesFragment(), "Upcoming");
+        adapter.addFrag(new NewMoviesFragment(), "In Theaters");
+        adapter.addFrag(new UpcomingMoviesFragment(), "Coming soon");
              viewPager.setAdapter(adapter);
     }
 
@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Display search edit text", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
@@ -118,13 +118,13 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camara) {
+        if (id == R.id.nav_sort) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_favourite) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_bookmark) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_theater) {
 
         } else if (id == R.id.nav_share) {
 
