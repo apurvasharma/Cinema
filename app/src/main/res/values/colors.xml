@@ -8,4 +8,6 @@
     <color name="colorSecondaryText">#727272</color>
     <color name="colorDivider">#B6B6B6</color>
     <color name="window_background">#FFF5F5F5</color>
+    <color name="recyclerViewBackground">#ECEFF1</color>
+    <color name="listItemBackground">#FFFFFF</color>
 </resources>

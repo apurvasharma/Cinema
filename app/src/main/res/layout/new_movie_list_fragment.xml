@@ -12,6 +12,7 @@
         android:layout_centerInParent="true" />
 
     <android.support.v7.widget.RecyclerView
+        android:background="@color/recyclerViewBackground"
         android:id="@+id/newMoviesRecyclerView"
         android:scrollbars="vertical"
         android:layout_width="match_parent"
