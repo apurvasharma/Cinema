@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.DesignDemo" parent="Base.Theme.DesignDemo">
+    <style name="RobotoTextViewStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">sans-serif-light</item>
     </style>
+
+    <style name="RobotoButtonStyle" parent="android:Widget.Holo.Button">
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="Theme.DesignDemo" parent="Base.Theme.DesignDemo">
+        <item name="android:textViewStyle">@style/RobotoTextViewStyle</item>
+        <item name="android:buttonStyle">@style/RobotoButtonStyle</item>
+    </style>
+
 
     <style name="Base.Theme.DesignDemo" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -17,6 +28,52 @@
         <item name="android:paddingTop">24dp</item>
         <item name="android:paddingBottom">24dp</item>
         <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="list_item_container">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:padding">15dp</item>
+        <item name="android:layout_marginBottom">1dp</item>
+        <item name="android:background">@color/listItemBackground</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="list_item_thumbnail">
+        <item name="android:scaleType">fitXY</item>
+        <item name="android:layout_width">80dp</item>
+        <item name="android:layout_height">100dp</item>
+    </style>
+
+    <style name="list_item_title">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/colorPrimaryText</item>
+        <item name="android:textAppearance">?attr/textAppearanceListItem</item>
+        <!--<item name="android:textSize">20sp</item>-->
+        <item name="android:layout_marginRight">18dp</item>
+        <item name="android:layout_marginLeft">18dp</item>
+
+    </style>
+
+    <style name="list_item_subtitle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/colorSecondaryText</item>
+        <item name="android:textAppearance">?attr/textAppearanceListItemSmall</item>
+        <item name="android:layout_marginRight">18dp</item>
+        <item name="android:layout_marginLeft">18dp</item>
+
+    </style>
+
+    <style name="list_item_ratingBar" parent="android:Widget.Holo.Light.RatingBar.Small" >
+        <item name="android:isIndicator">true</item>
+        <item name="android:numStars">5</item>
+        <item name="android:stepSize">0.25</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerVertical">true</item>
     </style>
 
 </resources>

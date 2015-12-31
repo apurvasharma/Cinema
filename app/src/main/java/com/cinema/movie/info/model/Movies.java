@@ -30,25 +30,25 @@ public class Movies {
         public String criticsConsensus;
         @SerializedName("release_dates")
         @Expose
-        public NewMovies.ReleaseDates releaseDates;
+        public MovieResponse.ReleaseDates releaseDates;
         @SerializedName("ratings")
         @Expose
-        public NewMovies.Ratings ratings;
+        public MovieResponse.Ratings ratings;
         @SerializedName("synopsis")
         @Expose
         public String synopsis;
         @SerializedName("posters")
         @Expose
-        public NewMovies.Posters posters;
+        public MovieResponse.Posters posters;
         @SerializedName("abridged_cast")
         @Expose
-        public List<NewMovies.AbridgedCast> abridgedCast = new ArrayList<NewMovies.AbridgedCast>();
+        public List<MovieResponse.AbridgedCast> abridgedCast = new ArrayList<MovieResponse.AbridgedCast>();
         @SerializedName("alternate_ids")
         @Expose
-        public NewMovies.AlternateIds alternateIds;
+        public MovieResponse.AlternateIds alternateIds;
         @SerializedName("links")
         @Expose
-        public NewMovies.Links links;
+        public MovieResponse.Links links;
 
 
         public String getId() {
@@ -59,13 +59,16 @@ public class Movies {
                 return title;
         }
 
-        public NewMovies.Ratings getRatings() {
+        public MovieResponse.Ratings getRatings() {
                 return ratings;
         }
 
-        public NewMovies.Posters getPosters() {
+        public MovieResponse.Posters getPosters() {
                 return posters;
         }
 
 
+        public MovieResponse.ReleaseDates getReleaseDates() {
+                return releaseDates;
+        }
 }

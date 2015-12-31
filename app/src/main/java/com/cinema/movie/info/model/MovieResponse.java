@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NewMovies {
+public class MovieResponse {
 
     @SerializedName("total")
     @Expose
@@ -129,5 +129,8 @@ public class NewMovies {
         @Expose
         public String theater;
 
+        public String getTheater() {
+            return theater;
+        }
     }
 }

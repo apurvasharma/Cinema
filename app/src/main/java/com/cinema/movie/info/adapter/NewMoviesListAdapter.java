@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -25,7 +26,7 @@ import java.util.List;
 /**
  * Created by Apurva on 11/22/2015.
  */
-public class NewMoviesListAdapter extends RecyclerView.Adapter<NewMoviesListAdapter.ViewHolder> {
+public class NewMoviesListAdapter extends  RecyclerView.Adapter<NewMoviesListAdapter.CustomViewHolder> {
 
     Context mContext;
     List<Movies> newMovieList = Collections.emptyList();
@@ -39,27 +40,27 @@ public class NewMoviesListAdapter extends RecyclerView.Adapter<NewMoviesListAdap
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public CustomViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.new_movie_list_item, parent, false);
-        return new ViewHolder(view);
+        return new CustomViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final CustomViewHolder holder, int position) {
 
         //set value of view at a given position
         Movies movies = newMovieList.get(position);
-        holder.newMovieTitle.setText(movies.getTitle());
+        holder.movieTitle.setText(movies.getTitle());
 
         //convert user-rating out of 5
         float userRating = (movies.getRatings().getAudienceScore() * 5) / 100;
 
-        LayerDrawable layerDrawable = (LayerDrawable) holder.newMoviesRating.getProgressDrawable();
+        LayerDrawable layerDrawable = (LayerDrawable) holder.movieRating.getProgressDrawable();
         // DrawableCompat.setTint(DrawableCompat.wrap(layerDrawable.getDrawable(0)), Color.RED);   // Empty star
         // DrawableCompat.setTint(DrawableCompat.wrap(layerDrawable.getDrawable(1)), Color.GREEN); // Partial star
         DrawableCompat.setTint(DrawableCompat.wrap(layerDrawable.getDrawable(2)), Color.rgb(229, 193, 0)); // Full star
 
-        holder.newMoviesRating.setRating(userRating);
+        holder.movieRating.setRating(userRating);
 
         //load image from JSON image URL
         String imageURL = movies.getPosters().getThumbnail();
@@ -68,7 +69,7 @@ public class NewMoviesListAdapter extends RecyclerView.Adapter<NewMoviesListAdap
             imageLoader.get(imageURL, new ImageLoader.ImageListener() {
                 @Override
                 public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
-                    holder.newMovieImage.setImageBitmap(response.getBitmap());
+                    holder.movieImage.setImageBitmap(response.getBitmap());
                 }
 
                 @Override
@@ -80,8 +81,8 @@ public class NewMoviesListAdapter extends RecyclerView.Adapter<NewMoviesListAdap
             Log.d(logTAG, "image url is Null");
         }
 
-
     }
+
 
     @Override
     public int getItemCount() {
@@ -89,25 +90,27 @@ public class NewMoviesListAdapter extends RecyclerView.Adapter<NewMoviesListAdap
 
     }
 
-    public void setNewMovieList(List<Movies> newMovieList) {
+    public void updateList(List<Movies> newMovieList) {
         //update the adapter to display the list of new movies
         this.newMovieList = newMovieList;
         notifyItemRangeChanged(0, newMovieList.size());
     }
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+
+    public class CustomViewHolder extends RecyclerView.ViewHolder {
 
         // public int newMovieId;
-        public TextView newMovieTitle;
-        public ImageView newMovieImage;
-        public RatingBar newMoviesRating;
+        public TextView movieTitle;
+        public ImageView movieImage;
+        public RatingBar movieRating;
 
-        public ViewHolder(View itemView) {
+
+        public CustomViewHolder(View itemView) {
             super(itemView);
-            newMoviesRating = (RatingBar) itemView.findViewById(R.id.ratingBar);
-            newMovieTitle = (TextView) itemView.findViewById(R.id.newMovieTitle);
-            newMovieImage = (ImageView) itemView.findViewById(R.id.newMovieImage);
+            movieRating = (RatingBar) itemView.findViewById(R.id.newMovieRatingBar);
+            movieTitle = (TextView) itemView.findViewById(R.id.newMovieTitle);
+            movieImage = (ImageView) itemView.findViewById(R.id.newMovieImage);
         }
     }
 }
