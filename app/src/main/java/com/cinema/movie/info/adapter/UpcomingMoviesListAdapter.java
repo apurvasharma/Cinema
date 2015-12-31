@@ -1,60 +1,114 @@
 package com.cinema.movie.info.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.LayerDrawable;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
 import com.cinema.movie.info.R;
+import com.cinema.movie.info.model.Movies;
+import com.cinema.movie.info.network.VolleySingleton;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by Apurva on 11/29/2015.
  */
-public class UpcomingMoviesListAdapter extends RecyclerView.Adapter<UpcomingMoviesListAdapter.ViewHolder> {
+public class UpcomingMoviesListAdapter extends  RecyclerView.Adapter<UpcomingMoviesListAdapter.CustomViewHolder> {
 
     Context mContext;
-
+    List<Movies> upcomingMovieList = Collections.emptyList();
+    private ImageLoader imageLoader;
+    private static final String logTAG = "UpcomingMoviesAdapter";
 
     public UpcomingMoviesListAdapter(Context context) {
         this.mContext = context;
+        VolleySingleton volleySingleton = VolleySingleton.getInstance();
+        imageLoader = volleySingleton.getImageLoader();
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.upcoming_movie_single_row, parent, false);
-        return new ViewHolder(view);
+    public CustomViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.upcoming_movie_list_item, parent, false);
+        return new CustomViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-//        final Place place = new PlaceData().placeList().get(position);
-//        holder.placeName.setText(place.name);
-//        Picasso.with(mContext).load(place.getImageResourceId(mContext)).into(holder.placeImage);
+    public void onBindViewHolder(final CustomViewHolder holder, int position) {
+
+        //set value of view at a given position
+        Movies movies = upcomingMovieList.get(position);
+        holder.movieTitle.setText(movies.getTitle());
+
+        //convert user-rating out of 5
+        float userRating = (movies.getRatings().getAudienceScore() * 5) / 100;
+
+        LayerDrawable layerDrawable = (LayerDrawable) holder.movieRating.getProgressDrawable();
+        DrawableCompat.setTint(DrawableCompat.wrap(layerDrawable.getDrawable(2)), Color.rgb(229, 193, 0)); // Full star
+
+        holder.movieRating.setRating(userRating);
+
+        //load image from JSON image URL
+        String imageURL = movies.getPosters().getThumbnail();
+
+        if (imageURL != null) {
+            imageLoader.get(imageURL, new ImageLoader.ImageListener() {
+                @Override
+                public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
+                    holder.movieImage.setImageBitmap(response.getBitmap());
+                }
+
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.d(logTAG, "VolleyError");
+                }
+            });
+        } else {
+            Log.d(logTAG, "image url is Null");
+        }
+
+
     }
 
     @Override
     public int getItemCount() {
-        //  return new PlaceData().placeList().size();
-        return 0;
+        return upcomingMovieList.size();
+
     }
 
+    public void updateList(List<Movies> newMovieList) {
+        //update the adapter to display the list of new movies
+        this.upcomingMovieList = newMovieList;
+        notifyItemRangeChanged(0, newMovieList.size());
+    }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        public LinearLayout upcomingMovieHolder;
-        public LinearLayout upcomingMovieNameHolder;
-        public TextView upcomingMovieName;
-        public ImageView upcomingMovieImage;
+    public class CustomViewHolder extends  RecyclerView.ViewHolder{
 
-        public ViewHolder(View itemView) {
+        // public int newMovieId;
+        public TextView movieTitle;
+        public ImageView movieImage;
+        public RatingBar movieRating;
+
+
+        public CustomViewHolder(View itemView) {
             super(itemView);
-            upcomingMovieHolder = (LinearLayout) itemView.findViewById(R.id.upcomingMovieHolder);
-            upcomingMovieName = (TextView) itemView.findViewById(R.id.upcomingMovieName);
-            upcomingMovieNameHolder = (LinearLayout) itemView.findViewById(R.id.upcomingMovieNameHolder);
-            upcomingMovieImage = (ImageView) itemView.findViewById(R.id.upcomingMovieImage);
+            movieRating = (RatingBar) itemView.findViewById(R.id.upcomingMovieRatingBar);
+            movieTitle = (TextView) itemView.findViewById(R.id.upcomingMovieTitle);
+            movieImage = (ImageView) itemView.findViewById(R.id.upcomingMovieImage);
         }
     }
+
+
 }

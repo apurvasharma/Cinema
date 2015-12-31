@@ -15,7 +15,7 @@
 
 
     <RatingBar
-        android:id="@+id/ratingBar"
+        android:id="@+id/newMovieRatingBar"
         style="@style/list_item_ratingBar"
         android:layout_below="@id/newMovieTitle"
         android:layout_alignLeft="@id/newMovieTitle"

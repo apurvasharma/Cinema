@@ -7,4 +7,5 @@ import com.cinema.movie.info.R;
  */
 public class AppConstants {
     public static final String NEW_MOVIES_URL = "http://api.rottentomatoes.com/api/public/v1.0/lists/movies/in_theaters.json?apikey=";
+    public static final String UPCOMING_MOVIES_URL = "http://api.rottentomatoes.com/api/public/v1.0/lists/movies/upcoming.json?apikey=";
 }
