@@ -129,5 +129,8 @@ public class MovieResponse {
         @Expose
         public String theater;
 
+        public String getTheater() {
+            return theater;
+        }
     }
 }

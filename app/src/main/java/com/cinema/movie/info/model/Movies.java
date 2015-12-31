@@ -68,4 +68,7 @@ public class Movies {
         }
 
 
+        public MovieResponse.ReleaseDates getReleaseDates() {
+                return releaseDates;
+        }
 }

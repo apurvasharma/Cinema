@@ -13,11 +13,17 @@
         android:layout_toEndOf="@+id/upcomingMovieImage"
         style="@style/list_item_title" />
 
+    <TextView
+        android:id="@+id/upcomingMovieReleaseDate"
+        style="@style/list_item_subtitle"
+        android:layout_below="@+id/upcomingMovieTitle"
+        android:layout_toRightOf="@+id/upcomingMovieImage"
+        android:layout_toEndOf="@+id/upcomingMovieImage" />
 
     <RatingBar
         android:id="@+id/upcomingMovieRatingBar"
         style="@style/list_item_ratingBar"
-        android:layout_below="@id/upcomingMovieTitle"
-        android:layout_alignLeft="@id/upcomingMovieTitle"
-        android:layout_alignStart="@id/upcomingMovieTitle" />
+        android:layout_below="@+id/upcomingMovieReleaseDate"
+        android:layout_alignLeft="@+id/upcomingMovieReleaseDate"
+        android:layout_alignStart="@+id/upcomingMovieReleaseDate" />
 </RelativeLayout>

@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -20,8 +19,13 @@ import com.cinema.movie.info.R;
 import com.cinema.movie.info.model.Movies;
 import com.cinema.movie.info.network.VolleySingleton;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Apurva on 11/29/2015.
@@ -52,6 +56,22 @@ public class UpcomingMoviesListAdapter extends  RecyclerView.Adapter<UpcomingMov
         Movies movies = upcomingMovieList.get(position);
         holder.movieTitle.setText(movies.getTitle());
 
+        String releaseDate= movies.getReleaseDates().getTheater();
+        DateFormat srcDf = new SimpleDateFormat("yyyy-mm-dd", Locale.US);
+        Date date = null;
+
+        try {
+            // parse the date string into Date object
+            date = srcDf.parse(releaseDate);
+            DateFormat destDf = new SimpleDateFormat("MMM dd, yyyy",Locale.US);
+            // format the date into another format
+            releaseDate = destDf.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        holder.movieReleaseDate.setText(releaseDate);
+
         //convert user-rating out of 5
         float userRating = (movies.getRatings().getAudienceScore() * 5) / 100;
 
@@ -78,8 +98,6 @@ public class UpcomingMoviesListAdapter extends  RecyclerView.Adapter<UpcomingMov
         } else {
             Log.d(logTAG, "image url is Null");
         }
-
-
     }
 
     @Override
@@ -100,13 +118,14 @@ public class UpcomingMoviesListAdapter extends  RecyclerView.Adapter<UpcomingMov
         public TextView movieTitle;
         public ImageView movieImage;
         public RatingBar movieRating;
-
+        public TextView movieReleaseDate;
 
         public CustomViewHolder(View itemView) {
             super(itemView);
             movieRating = (RatingBar) itemView.findViewById(R.id.upcomingMovieRatingBar);
             movieTitle = (TextView) itemView.findViewById(R.id.upcomingMovieTitle);
             movieImage = (ImageView) itemView.findViewById(R.id.upcomingMovieImage);
+            movieReleaseDate = (TextView) itemView.findViewById(R.id.upcomingMovieReleaseDate);
         }
     }
 
