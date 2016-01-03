@@ -36,11 +36,20 @@ public class UpcomingMoviesListAdapter extends  RecyclerView.Adapter<UpcomingMov
     List<Movies> upcomingMovieList = Collections.emptyList();
     private ImageLoader imageLoader;
     private static final String logTAG = "UpcomingMoviesAdapter";
+    OnItemClickListener mItemClickListener;
 
     public UpcomingMoviesListAdapter(Context context) {
         this.mContext = context;
         VolleySingleton volleySingleton = VolleySingleton.getInstance();
         imageLoader = volleySingleton.getImageLoader();
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(View view, int position);
+    }
+
+    public void setOnItemClickListener(final OnItemClickListener mItemClickListener) {
+        this.mItemClickListener = mItemClickListener;
     }
 
     @Override
@@ -112,7 +121,7 @@ public class UpcomingMoviesListAdapter extends  RecyclerView.Adapter<UpcomingMov
         notifyItemRangeChanged(0, newMovieList.size());
     }
 
-    public class CustomViewHolder extends  RecyclerView.ViewHolder{
+    public class CustomViewHolder extends  RecyclerView.ViewHolder implements View.OnClickListener{
 
         // public int newMovieId;
         public TextView movieTitle;
@@ -127,7 +136,13 @@ public class UpcomingMoviesListAdapter extends  RecyclerView.Adapter<UpcomingMov
             movieImage = (ImageView) itemView.findViewById(R.id.upcomingMovieImage);
             movieReleaseDate = (TextView) itemView.findViewById(R.id.upcomingMovieReleaseDate);
         }
+
+        @Override
+        public void onClick(View v) {
+
+        }
     }
 
 
-}
+
+    }

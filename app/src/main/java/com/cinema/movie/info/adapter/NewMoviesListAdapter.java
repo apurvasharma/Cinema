@@ -9,10 +9,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
@@ -32,6 +35,7 @@ public class NewMoviesListAdapter extends  RecyclerView.Adapter<NewMoviesListAda
     List<Movies> newMovieList = Collections.emptyList();
     private ImageLoader imageLoader;
     private static final String logTAG = "NewMoviesListAdapter";
+    OnItemClickListener mItemClickListener;
 
     public NewMoviesListAdapter(Context context) {
         this.mContext = context;
@@ -74,6 +78,7 @@ public class NewMoviesListAdapter extends  RecyclerView.Adapter<NewMoviesListAda
 
                 @Override
                 public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(mContext,error.getMessage(),Toast.LENGTH_LONG).show();
                     Log.d(logTAG, "VolleyError");
                 }
             });
@@ -97,10 +102,18 @@ public class NewMoviesListAdapter extends  RecyclerView.Adapter<NewMoviesListAda
     }
 
 
+    public interface OnItemClickListener {
+        void onItemClick(View view, int position);
+    }
 
-    public class CustomViewHolder extends RecyclerView.ViewHolder {
+    public void setOnItemClickListener(final OnItemClickListener mItemClickListener) {
+        this.mItemClickListener = mItemClickListener;
+    }
+
+    public class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         // public int newMovieId;
+        public RelativeLayout itemContainer;
         public TextView movieTitle;
         public ImageView movieImage;
         public RatingBar movieRating;
@@ -111,6 +124,14 @@ public class NewMoviesListAdapter extends  RecyclerView.Adapter<NewMoviesListAda
             movieRating = (RatingBar) itemView.findViewById(R.id.newMovieRatingBar);
             movieTitle = (TextView) itemView.findViewById(R.id.newMovieTitle);
             movieImage = (ImageView) itemView.findViewById(R.id.newMovieImage);
+            itemContainer = (RelativeLayout) itemView.findViewById(R.id.newMovieListItemContainer);
+            itemContainer.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) {
+           // mItemClickListener.onItemClick(itemView, getPosition());
+        }
+
     }
 }

@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.android.volley.NetworkError;
 import com.android.volley.NetworkResponse;
@@ -22,6 +23,7 @@ import com.cinema.movie.info.adapter.NewMoviesListAdapter;
 import com.cinema.movie.info.adapter.UpcomingMoviesListAdapter;
 import com.cinema.movie.info.model.Movies;
 import com.cinema.movie.info.model.MovieResponse;
+import com.cinema.movie.info.network.CinemaApplication;
 import com.cinema.movie.info.network.VolleySingleton;
 import com.google.gson.Gson;
 
@@ -82,6 +84,8 @@ public class BaseFragment extends Fragment {
             public void onErrorResponse(VolleyError error) {
                 //stop progress bar
                 mProgressBar.setVisibility(View.GONE);
+                Toast.makeText(CinemaApplication.getAppContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+
                 NetworkResponse networkResponse = error.networkResponse;
                 if (networkResponse != null) {
 

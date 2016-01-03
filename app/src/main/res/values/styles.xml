@@ -31,10 +31,13 @@
     </style>
 
     <style name="list_item_container">
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:padding">15dp</item>
         <item name="android:layout_marginBottom">1dp</item>
-        <item name="android:background">@color/listItemBackground</item>
+        <!--<item name="android:background">@color/listItemBackground</item>-->
         <item name="android:layout_height">wrap_content</item>
     </style>
 
