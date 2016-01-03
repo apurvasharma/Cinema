@@ -9,8 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
+
 import com.cinema.movie.info.R;
+import com.cinema.movie.info.adapter.NewMoviesListAdapter;
 import com.cinema.movie.info.adapter.UpcomingMoviesListAdapter;
+import com.cinema.movie.info.network.CinemaApplication;
 import com.cinema.movie.info.utils.AppConstants;
 import com.cinema.movie.info.utils.SimpleDividerItemDecoration;
 
@@ -23,7 +27,6 @@ public class UpcomingMoviesFragment extends BaseFragment {
 
 
     private UpcomingMoviesListAdapter mListAdapter;
-    private ProgressBar mProgressBar;
 
     public UpcomingMoviesFragment(UpcomingMoviesListAdapter listAdapter) {
         super(listAdapter);
@@ -34,8 +37,8 @@ public class UpcomingMoviesFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.upcoming_movie_list_fragment, container, false);
 
-        mProgressBar = (ProgressBar) view.findViewById(R.id.upcomingMovieProgressBar);
-        super.mProgressBar = this.mProgressBar;
+        ProgressBar mProgressBar = (ProgressBar) view.findViewById(R.id.upcomingMovieProgressBar);
+        super.mProgressBar = mProgressBar;
 
         RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.upcomingMoviesRecyclerView);
         mRecyclerView.addItemDecoration(new SimpleDividerItemDecoration(getResources()));
@@ -43,11 +46,16 @@ public class UpcomingMoviesFragment extends BaseFragment {
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(mListAdapter);
-
+        mListAdapter.setOnItemClickListener(onItemClickListener);
         makeNetworkRequest(AppConstants.UPCOMING_MOVIES_URL);
         return view;
     }
 
-
+    UpcomingMoviesListAdapter.OnItemClickListener onItemClickListener = new UpcomingMoviesListAdapter.OnItemClickListener() {
+        @Override
+        public void onItemClick(View v, int position) {
+            Toast.makeText(CinemaApplication.getAppContext(), "Upcoming: " + position, Toast.LENGTH_SHORT).show();
+        }
+    };
 
 }

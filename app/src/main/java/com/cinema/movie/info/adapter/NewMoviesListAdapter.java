@@ -130,7 +130,10 @@ public class NewMoviesListAdapter extends  RecyclerView.Adapter<NewMoviesListAda
 
         @Override
         public void onClick(View v) {
-           // mItemClickListener.onItemClick(itemView, getPosition());
+            if (mItemClickListener != null) {
+                int position = getAdapterPosition();
+                mItemClickListener.onItemClick(itemView, position);
+            }
         }
 
     }

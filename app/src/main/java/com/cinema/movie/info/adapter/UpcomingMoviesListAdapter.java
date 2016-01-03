@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
@@ -67,7 +68,7 @@ public class UpcomingMoviesListAdapter extends  RecyclerView.Adapter<UpcomingMov
 
         String releaseDate= movies.getReleaseDates().getTheater();
         DateFormat srcDf = new SimpleDateFormat("yyyy-mm-dd", Locale.US);
-        Date date = null;
+        Date date;
 
         try {
             // parse the date string into Date object
@@ -124,6 +125,7 @@ public class UpcomingMoviesListAdapter extends  RecyclerView.Adapter<UpcomingMov
     public class CustomViewHolder extends  RecyclerView.ViewHolder implements View.OnClickListener{
 
         // public int newMovieId;
+        public RelativeLayout itemContainer;
         public TextView movieTitle;
         public ImageView movieImage;
         public RatingBar movieRating;
@@ -135,11 +137,17 @@ public class UpcomingMoviesListAdapter extends  RecyclerView.Adapter<UpcomingMov
             movieTitle = (TextView) itemView.findViewById(R.id.upcomingMovieTitle);
             movieImage = (ImageView) itemView.findViewById(R.id.upcomingMovieImage);
             movieReleaseDate = (TextView) itemView.findViewById(R.id.upcomingMovieReleaseDate);
+            itemContainer = (RelativeLayout) itemView.findViewById(R.id.upcomingMovieListItemContainer);
+            itemContainer.setOnClickListener(this);
+
         }
 
         @Override
         public void onClick(View v) {
-
+            if (mItemClickListener != null) {
+                int position = getAdapterPosition();
+                mItemClickListener.onItemClick(itemView, position);
+            }
         }
     }
 
