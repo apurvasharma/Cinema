@@ -33,7 +33,6 @@ import java.util.List;
 @SuppressLint("ValidFragment")
 public abstract class BaseFragment extends Fragment {
     private Gson gson = new Gson();
-
     protected ProgressBar mProgressBar;
 
 

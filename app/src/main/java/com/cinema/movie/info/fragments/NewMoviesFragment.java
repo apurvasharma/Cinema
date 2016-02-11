@@ -66,14 +66,15 @@ public class NewMoviesFragment extends BaseFragment {
         @Override
         public void onItemClick(View v, int position) {
            // Toast.makeText(CinemaApplication.getAppContext(), "In Theaters " + position, Toast.LENGTH_SHORT).show();
-           // String movieId = mMovieList.get(position).getId();
-            Intent i = new Intent(getActivity(), MovieDetailsActivity.class);
+            String movieId = mMovieList.get(position).getId();
+            Intent intent = new Intent(getActivity(), MovieDetailsActivity.class);
 
             View sharedView = v.findViewById(R.id.newMovieTitle);
             String transitionName = getString(R.string.element_transition_name);
 
             ActivityOptions transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(getActivity(), sharedView, transitionName);
-            getActivity().startActivity(i, transitionActivityOptions.toBundle());
+            intent.putExtra(AppConstants.MOVIE_ID,movieId);
+            getActivity().startActivity(intent, transitionActivityOptions.toBundle());
 
         }
     };
