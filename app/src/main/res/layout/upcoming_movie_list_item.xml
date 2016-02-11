@@ -8,6 +8,7 @@
 
 
     <TextView
+        android:transitionName="@string/element_transition_name"
         android:id="@+id/upcomingMovieTitle"
         android:layout_alignTop="@+id/upcomingMovieImage"
         android:layout_toRightOf="@+id/upcomingMovieImage"
