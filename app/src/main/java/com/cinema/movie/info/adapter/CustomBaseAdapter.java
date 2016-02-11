@@ -15,16 +15,16 @@
 ///**
 // * Created by Apurva on 12/30/2015.
 // */
-//public abstract class CustomBaseAdapter extends RecyclerView.Adapter<CustomBaseAdapter.CustomViewHolder> {
+//public abstract class CustomBaseAdapter extends RecyclerView.Adapter<CustomBaseAdapter.MoviesInTheaterViewHolder> {
 //
 //
 //    @Override
-//    public CustomBaseAdapter.CustomViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+//    public CustomBaseAdapter.MoviesInTheaterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 //        return null;
 //    }
 //
 //    @Override
-//    public void onBindViewHolder(CustomBaseAdapter.CustomViewHolder holder, int position) {
+//    public void onBindViewHolder(CustomBaseAdapter.MoviesInTheaterViewHolder holder, int position) {
 //
 //    }
 //
@@ -39,14 +39,14 @@
 //    }
 //
 //
-//    public class CustomViewHolder extends RecyclerView.ViewHolder {
+//    public class MoviesInTheaterViewHolder extends RecyclerView.ViewHolder {
 ////        // public int newMovieId;
 ////        public TextView movieTitle;
 ////        public ImageView movieImage;
 ////        public RatingBar movieRating;
 //
 //
-//        public CustomViewHolder(View itemView) {
+//        public MoviesInTheaterViewHolder(View itemView) {
 //            super(itemView);
 //        }
 //    }

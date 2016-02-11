@@ -10,11 +10,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
 import com.cinema.movie.info.R;
 import com.cinema.movie.info.adapter.NewMoviesListAdapter;
+import com.cinema.movie.info.model.Movies;
 import com.cinema.movie.info.network.CinemaApplication;
 import com.cinema.movie.info.utils.AppConstants;
 import com.cinema.movie.info.utils.SimpleDividerItemDecoration;
+
+import java.util.Collections;
+import java.util.List;
 
 
 /**
@@ -23,11 +28,10 @@ import com.cinema.movie.info.utils.SimpleDividerItemDecoration;
 @SuppressLint("ValidFragment")
 public class NewMoviesFragment extends BaseFragment {
 
-
+    private List<Movies> mMovieList = Collections.emptyList();
     private NewMoviesListAdapter mListAdapter;
 
     public NewMoviesFragment(NewMoviesListAdapter listAdapter) {
-        super(listAdapter);
         mListAdapter = listAdapter;
     }
 
@@ -35,8 +39,7 @@ public class NewMoviesFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.new_movie_list_fragment, container, false);
 
-        ProgressBar mProgressBar = (ProgressBar) view.findViewById(R.id.newMovieProgressBar);
-        super.mProgressBar = mProgressBar;
+        super.mProgressBar = (ProgressBar) view.findViewById(R.id.newMovieProgressBar);
 
         RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.newMoviesRecyclerView);
         mRecyclerView.addItemDecoration(new SimpleDividerItemDecoration(getResources()));
@@ -49,10 +52,18 @@ public class NewMoviesFragment extends BaseFragment {
         return view;
     }
 
-    NewMoviesListAdapter.OnItemClickListener onItemClickListener = new NewMoviesListAdapter.OnItemClickListener() {
+    @Override
+    public void updateAdapter(List<Movies> movieList) {
+        mMovieList = movieList;
+        mListAdapter.updateList(movieList);
+    }
+
+    NewMoviesListAdapter.InTheatersItemClickListener onItemClickListener = new NewMoviesListAdapter.InTheatersItemClickListener() {
         @Override
         public void onItemClick(View v, int position) {
             Toast.makeText(CinemaApplication.getAppContext(), "In Theaters " + position, Toast.LENGTH_SHORT).show();
+            String movieId = mMovieList.get(position).getId();
+
         }
     };
 

@@ -1,6 +1,5 @@
 package com.cinema.movie.info.adapter;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.LayerDrawable;
 import android.support.v4.graphics.drawable.DrawableCompat;
@@ -9,13 +8,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
@@ -29,28 +25,26 @@ import java.util.List;
 /**
  * Created by Apurva on 11/22/2015.
  */
-public class NewMoviesListAdapter extends  RecyclerView.Adapter<NewMoviesListAdapter.CustomViewHolder> {
+public class NewMoviesListAdapter extends  RecyclerView.Adapter<NewMoviesListAdapter.MoviesInTheaterViewHolder> {
 
-    Context mContext;
-    List<Movies> newMovieList = Collections.emptyList();
+    private List<Movies> newMovieList = Collections.emptyList();
     private ImageLoader imageLoader;
     private static final String logTAG = "NewMoviesListAdapter";
-    OnItemClickListener mItemClickListener;
+    private InTheatersItemClickListener mItemClickListener;
 
-    public NewMoviesListAdapter(Context context) {
-        this.mContext = context;
+    public NewMoviesListAdapter() {
         VolleySingleton volleySingleton = VolleySingleton.getInstance();
         imageLoader = volleySingleton.getImageLoader();
     }
 
     @Override
-    public CustomViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MoviesInTheaterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.new_movie_list_item, parent, false);
-        return new CustomViewHolder(view);
+        return new MoviesInTheaterViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final CustomViewHolder holder, int position) {
+    public void onBindViewHolder(final MoviesInTheaterViewHolder holder, int position) {
 
         //set value of view at a given position
         Movies movies = newMovieList.get(position);
@@ -78,7 +72,6 @@ public class NewMoviesListAdapter extends  RecyclerView.Adapter<NewMoviesListAda
 
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(mContext,error.getMessage(),Toast.LENGTH_LONG).show();
                     Log.d(logTAG, "VolleyError");
                 }
             });
@@ -102,24 +95,23 @@ public class NewMoviesListAdapter extends  RecyclerView.Adapter<NewMoviesListAda
     }
 
 
-    public interface OnItemClickListener {
+    public interface InTheatersItemClickListener {
         void onItemClick(View view, int position);
     }
 
-    public void setOnItemClickListener(final OnItemClickListener mItemClickListener) {
+    public void setOnItemClickListener(final InTheatersItemClickListener mItemClickListener) {
         this.mItemClickListener = mItemClickListener;
     }
 
-    public class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class MoviesInTheaterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        // public int newMovieId;
         public RelativeLayout itemContainer;
         public TextView movieTitle;
         public ImageView movieImage;
         public RatingBar movieRating;
 
 
-        public CustomViewHolder(View itemView) {
+        public MoviesInTheaterViewHolder(View itemView) {
             super(itemView);
             movieRating = (RatingBar) itemView.findViewById(R.id.newMovieRatingBar);
             movieTitle = (TextView) itemView.findViewById(R.id.newMovieTitle);

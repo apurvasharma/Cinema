@@ -1,6 +1,5 @@
 package com.cinema.movie.info.adapter;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.LayerDrawable;
 import android.support.v4.graphics.drawable.DrawableCompat;
@@ -31,36 +30,34 @@ import java.util.Locale;
 /**
  * Created by Apurva on 11/29/2015.
  */
-public class UpcomingMoviesListAdapter extends  RecyclerView.Adapter<UpcomingMoviesListAdapter.CustomViewHolder> {
+public class UpcomingMoviesListAdapter extends  RecyclerView.Adapter<UpcomingMoviesListAdapter.MoviesComingSoonViewHolder> {
 
-    Context mContext;
-    List<Movies> upcomingMovieList = Collections.emptyList();
+    private List<Movies> upcomingMovieList = Collections.emptyList();
     private ImageLoader imageLoader;
     private static final String logTAG = "UpcomingMoviesAdapter";
-    OnItemClickListener mItemClickListener;
+    private UpcomingItemClickListener mItemClickListener;
 
-    public UpcomingMoviesListAdapter(Context context) {
-        this.mContext = context;
+    public UpcomingMoviesListAdapter() {
         VolleySingleton volleySingleton = VolleySingleton.getInstance();
         imageLoader = volleySingleton.getImageLoader();
     }
 
-    public interface OnItemClickListener {
+    public interface UpcomingItemClickListener {
         void onItemClick(View view, int position);
     }
 
-    public void setOnItemClickListener(final OnItemClickListener mItemClickListener) {
+    public void setOnItemClickListener(final UpcomingItemClickListener mItemClickListener) {
         this.mItemClickListener = mItemClickListener;
     }
 
     @Override
-    public CustomViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MoviesComingSoonViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.upcoming_movie_list_item, parent, false);
-        return new CustomViewHolder(view);
+        return new MoviesComingSoonViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final CustomViewHolder holder, int position) {
+    public void onBindViewHolder(final MoviesComingSoonViewHolder holder, int position) {
 
         //set value of view at a given position
         Movies movies = upcomingMovieList.get(position);
@@ -122,7 +119,7 @@ public class UpcomingMoviesListAdapter extends  RecyclerView.Adapter<UpcomingMov
         notifyItemRangeChanged(0, newMovieList.size());
     }
 
-    public class CustomViewHolder extends  RecyclerView.ViewHolder implements View.OnClickListener{
+    public class MoviesComingSoonViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         // public int newMovieId;
         public RelativeLayout itemContainer;
@@ -131,7 +128,7 @@ public class UpcomingMoviesListAdapter extends  RecyclerView.Adapter<UpcomingMov
         public RatingBar movieRating;
         public TextView movieReleaseDate;
 
-        public CustomViewHolder(View itemView) {
+        public MoviesComingSoonViewHolder(View itemView) {
             super(itemView);
             movieRating = (RatingBar) itemView.findViewById(R.id.upcomingMovieRatingBar);
             movieTitle = (TextView) itemView.findViewById(R.id.upcomingMovieTitle);
@@ -139,7 +136,6 @@ public class UpcomingMoviesListAdapter extends  RecyclerView.Adapter<UpcomingMov
             movieReleaseDate = (TextView) itemView.findViewById(R.id.upcomingMovieReleaseDate);
             itemContainer = (RelativeLayout) itemView.findViewById(R.id.upcomingMovieListItemContainer);
             itemContainer.setOnClickListener(this);
-
         }
 
         @Override
@@ -150,7 +146,4 @@ public class UpcomingMoviesListAdapter extends  RecyclerView.Adapter<UpcomingMov
             }
         }
     }
-
-
-
-    }
+}

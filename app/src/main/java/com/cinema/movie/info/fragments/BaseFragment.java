@@ -19,8 +19,6 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.cinema.movie.info.R;
-import com.cinema.movie.info.adapter.NewMoviesListAdapter;
-import com.cinema.movie.info.adapter.UpcomingMoviesListAdapter;
 import com.cinema.movie.info.model.Movies;
 import com.cinema.movie.info.model.MovieResponse;
 import com.cinema.movie.info.network.CinemaApplication;
@@ -33,23 +31,10 @@ import java.util.List;
  * Created by Apurva on 12/30/2015.
  */
 @SuppressLint("ValidFragment")
-public class BaseFragment extends Fragment {
+public abstract class BaseFragment extends Fragment {
     private Gson gson = new Gson();
-    private NewMoviesListAdapter mNewMoviesListAdapter;
-    private UpcomingMoviesListAdapter mUpcomingMoviesListAdapter;
 
     protected ProgressBar mProgressBar;
-
-
-    public BaseFragment(Object listAdapter) {
-        if (listAdapter instanceof NewMoviesListAdapter){
-            mNewMoviesListAdapter = (NewMoviesListAdapter) listAdapter;
-        }else if(listAdapter instanceof UpcomingMoviesListAdapter){
-            mUpcomingMoviesListAdapter = (UpcomingMoviesListAdapter) listAdapter;
-        }
-
-    }
-
 
 
     @Override
@@ -65,7 +50,7 @@ public class BaseFragment extends Fragment {
         //start progress bar
         mProgressBar.setVisibility(View.VISIBLE);
 
-        // Request a string response from the provided NEW_MOVIES_URL.
+        // Request a string response from the given URL.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URL,
                 new Response.Listener<String>() {
                     @Override
@@ -75,7 +60,7 @@ public class BaseFragment extends Fragment {
                         MovieResponse movieResponse = gson.fromJson(response, MovieResponse.class);
                         List<Movies> movieList = movieResponse.getMovies();
                         if (movieList != null) {
-                            updateNewMovieListAdapter(movieList);
+                            updateAdapter(movieList);
                         }
                         //  Log.d("response = ", response);
                     }
@@ -107,12 +92,6 @@ public class BaseFragment extends Fragment {
         requestQueue.add(stringRequest);
     }
 
-    private void updateNewMovieListAdapter(List<Movies> movieList) {
-        //update the adapter to display the parsed list
-        if (mNewMoviesListAdapter != null) {
-            mNewMoviesListAdapter.updateList(movieList);
-        }else if(mUpcomingMoviesListAdapter != null){
-            mUpcomingMoviesListAdapter.updateList(movieList);
-        }
-    }
+    public abstract void updateAdapter(List<Movies> movieList);
+
 }
