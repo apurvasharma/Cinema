@@ -96,7 +96,7 @@ public class NewMoviesListAdapter extends  RecyclerView.Adapter<NewMoviesListAda
 
 
     public interface InTheatersItemClickListener {
-        void onItemClick(View view, int position);
+        void onItemClick(View view, int position );
     }
 
     public void setOnItemClickListener(final InTheatersItemClickListener mItemClickListener) {
