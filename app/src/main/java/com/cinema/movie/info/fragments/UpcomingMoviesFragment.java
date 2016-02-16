@@ -7,21 +7,22 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.cinema.movie.info.R;
 import com.cinema.movie.info.activity.MovieDetailsActivity;
 import com.cinema.movie.info.adapter.UpcomingMoviesListAdapter;
+import com.cinema.movie.info.model.MovieImagesResponse;
+import com.cinema.movie.info.model.MovieListResponse;
 import com.cinema.movie.info.model.Movies;
-import com.cinema.movie.info.network.CinemaApplication;
 import com.cinema.movie.info.utils.AppConstants;
-import com.cinema.movie.info.utils.SimpleDividerItemDecoration;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -33,6 +34,7 @@ public class UpcomingMoviesFragment extends BaseFragment {
 
     private List<Movies> mMovieList = Collections.emptyList();
     private UpcomingMoviesListAdapter mListAdapter;
+    private HashMap<String, MovieImagesResponse.Result> mMovieImages;
 
     public UpcomingMoviesFragment(UpcomingMoviesListAdapter listAdapter) {
         mListAdapter = listAdapter;
@@ -45,19 +47,21 @@ public class UpcomingMoviesFragment extends BaseFragment {
         super.mProgressBar = (ProgressBar) view.findViewById(R.id.upcomingMovieProgressBar);
 
         RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.upcomingMoviesRecyclerView);
-        mRecyclerView.addItemDecoration(new SimpleDividerItemDecoration(getResources()));
+      //  mRecyclerView.addItemDecoration(new SimpleDividerItemDecoration(getResources()));
         // mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+       // mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         mRecyclerView.setAdapter(mListAdapter);
         mListAdapter.setOnItemClickListener(onItemClickListener);
-        makeNetworkRequest(AppConstants.UPCOMING_MOVIES_URL);
+        makeNetworkRequest(AppConstants.UPCOMING_MOVIES_URL.concat(getString(R.string.rt_api_key)));
         return view;
     }
 
     @Override
-    public void updateAdapter(List<Movies> movieList) {
+    public void updateAdapter(List<Movies> movieList,HashMap<String, MovieImagesResponse.Result> movieImages) {
         mMovieList = movieList;
+        mMovieImages = movieImages;
         mListAdapter.updateList(movieList);
     }
 

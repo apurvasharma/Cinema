@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new NewMoviesFragment(new NewMoviesListAdapter()), "In Theaters");
+        adapter.addFragment(new NewMoviesFragment(new NewMoviesListAdapter(getString(R.string.mdb_api_key))), "In Theaters");
         adapter.addFragment(new UpcomingMoviesFragment(new UpcomingMoviesListAdapter()), "Coming soon");
         viewPager.setAdapter(adapter);
     }

@@ -40,13 +40,15 @@
                 app:layout_collapseMode="pin" />
 
             <TextView
+                android:id="@+id/collapsingToolbarTitle"
                 android:transitionName="@string/element_transition_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:layout_marginBottom="32dp"
-                android:textSize="18dp"
-                android:layout_marginLeft="18dp"
+                android:textSize="18sp"
+                android:layout_marginStart="18dp"
+                android:layout_marginEnd="18dp"
                 android:text="TITLE" />
 
         </android.support.design.widget.CollapsingToolbarLayout>
@@ -104,7 +106,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Friends"
+                        android:text="Cast"
                         android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
                     <TextView
@@ -131,7 +133,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Related"
+                        android:text="Reviews"
                         android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
                     <TextView

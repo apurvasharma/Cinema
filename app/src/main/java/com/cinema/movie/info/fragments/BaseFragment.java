@@ -19,12 +19,14 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.cinema.movie.info.R;
+import com.cinema.movie.info.model.MovieImagesResponse;
+import com.cinema.movie.info.model.MovieListResponse;
 import com.cinema.movie.info.model.Movies;
-import com.cinema.movie.info.model.MovieResponse;
 import com.cinema.movie.info.network.CinemaApplication;
 import com.cinema.movie.info.network.VolleySingleton;
 import com.google.gson.Gson;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -34,6 +36,7 @@ import java.util.List;
 public abstract class BaseFragment extends Fragment {
     private Gson gson = new Gson();
     protected ProgressBar mProgressBar;
+    protected HashMap<String, MovieImagesResponse.Result> movieImages = new HashMap<>();
 
 
     @Override
@@ -43,7 +46,6 @@ public abstract class BaseFragment extends Fragment {
 
 
     protected void makeNetworkRequest(String URL) {
-        URL = URL.concat(getString(R.string.api_key));
         RequestQueue requestQueue = VolleySingleton.getInstance().getRequestQueue();
 
         //start progress bar
@@ -56,13 +58,15 @@ public abstract class BaseFragment extends Fragment {
                     public void onResponse(String response) {
                         //stop progress bar
                         mProgressBar.setVisibility(View.GONE);
-                        MovieResponse movieResponse = gson.fromJson(response, MovieResponse.class);
-                        List<Movies> movieList = movieResponse.getMovies();
-                        if (movieList != null) {
-                            updateAdapter(movieList);
+
+                            MovieListResponse movieResponse = gson.fromJson(response, MovieListResponse.class);
+                            List<Movies> movieList = movieResponse.getMovies();
+                            if (movieList != null) {
+                                updateAdapter(movieList,movieImages);
+                            }
                         }
                         //  Log.d("response = ", response);
-                    }
+
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
@@ -91,6 +95,6 @@ public abstract class BaseFragment extends Fragment {
         requestQueue.add(stringRequest);
     }
 
-    public abstract void updateAdapter(List<Movies> movieList);
+    public abstract void updateAdapter(List<Movies> movieList,HashMap<String,MovieImagesResponse.Result> movieImages);
 
 }

@@ -16,16 +16,21 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.cinema.movie.info.R;
+import com.cinema.movie.info.model.MovieImagesResponse;
 import com.cinema.movie.info.model.Movies;
 import com.cinema.movie.info.network.VolleySingleton;
+import com.cinema.movie.info.utils.AppConstants;
+import com.cinema.movie.info.utils.AppUtils;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * Created by Apurva on 11/29/2015.
@@ -35,7 +40,7 @@ public class UpcomingMoviesListAdapter extends  RecyclerView.Adapter<UpcomingMov
     private List<Movies> upcomingMovieList = Collections.emptyList();
     private ImageLoader imageLoader;
     private static final String logTAG = "UpcomingMoviesAdapter";
-    private UpcomingItemClickListener mItemClickListener;
+    UpcomingItemClickListener mItemClickListener;
 
     public UpcomingMoviesListAdapter() {
         VolleySingleton volleySingleton = VolleySingleton.getInstance();
@@ -63,20 +68,7 @@ public class UpcomingMoviesListAdapter extends  RecyclerView.Adapter<UpcomingMov
         Movies movies = upcomingMovieList.get(position);
         holder.movieTitle.setText(movies.getTitle());
 
-        String releaseDate= movies.getReleaseDates().getTheater();
-        DateFormat srcDf = new SimpleDateFormat("yyyy-mm-dd", Locale.US);
-        Date date;
-
-        try {
-            // parse the date string into Date object
-            date = srcDf.parse(releaseDate);
-            DateFormat destDf = new SimpleDateFormat("MMM dd, yyyy",Locale.US);
-            // format the date into another format
-            releaseDate = destDf.format(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
+        String releaseDate = AppUtils.changeDateFormat(movies.getReleaseDates().getTheater());
         holder.movieReleaseDate.setText(releaseDate);
 
         //convert user-rating out of 5
@@ -87,14 +79,21 @@ public class UpcomingMoviesListAdapter extends  RecyclerView.Adapter<UpcomingMov
 
         holder.movieRating.setRating(userRating);
 
-        //load image from JSON image URL
+        //load thumbnail from JSON image URL
         String imageURL = movies.getPosters().getThumbnail();
+
+
 
         if (imageURL != null) {
             imageLoader.get(imageURL, new ImageLoader.ImageListener() {
                 @Override
                 public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
-                    holder.movieImage.setImageBitmap(response.getBitmap());
+                    if (response.getBitmap() != null) {
+                        holder.movieImage.setImageBitmap(response.getBitmap());
+                    } else {
+                        holder.movieImage.setImageBitmap(null);
+
+                    }
                 }
 
                 @Override
@@ -116,7 +115,7 @@ public class UpcomingMoviesListAdapter extends  RecyclerView.Adapter<UpcomingMov
     public void updateList(List<Movies> newMovieList) {
         //update the adapter to display the list of new movies
         this.upcomingMovieList = newMovieList;
-        notifyItemRangeChanged(0, newMovieList.size());
+        notifyDataSetChanged();
     }
 
     public class MoviesComingSoonViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

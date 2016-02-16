@@ -11,18 +11,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.cinema.movie.info.R;
-import com.cinema.movie.info.activity.MainActivity;
 import com.cinema.movie.info.activity.MovieDetailsActivity;
 import com.cinema.movie.info.adapter.NewMoviesListAdapter;
+import com.cinema.movie.info.model.MovieImagesResponse;
+import com.cinema.movie.info.model.MovieListResponse;
 import com.cinema.movie.info.model.Movies;
-import com.cinema.movie.info.network.CinemaApplication;
 import com.cinema.movie.info.utils.AppConstants;
 import com.cinema.movie.info.utils.SimpleDividerItemDecoration;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -34,6 +34,7 @@ public class NewMoviesFragment extends BaseFragment {
 
     private List<Movies> mMovieList = Collections.emptyList();
     private NewMoviesListAdapter mListAdapter;
+    private HashMap<String, MovieImagesResponse.Result> mMovieImages;
 
     public NewMoviesFragment(NewMoviesListAdapter listAdapter) {
         mListAdapter = listAdapter;
@@ -46,19 +47,21 @@ public class NewMoviesFragment extends BaseFragment {
         super.mProgressBar = (ProgressBar) view.findViewById(R.id.newMovieProgressBar);
 
         RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.newMoviesRecyclerView);
-        mRecyclerView.addItemDecoration(new SimpleDividerItemDecoration(getResources()));
+      //  mRecyclerView.addItemDecoration(new SimpleDividerItemDecoration(getResources()));
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        // mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         mRecyclerView.setAdapter(mListAdapter);
         mListAdapter.setOnItemClickListener(onItemClickListener);
-        makeNetworkRequest(AppConstants.NEW_MOVIES_URL);
+        makeNetworkRequest(AppConstants.NEW_MOVIES_URL.concat(getString(R.string.rt_api_key)));
         return view;
     }
 
     @Override
-    public void updateAdapter(List<Movies> movieList) {
+    public void updateAdapter(List<Movies> movieList, HashMap<String, MovieImagesResponse.Result> movieImages) {
         mMovieList = movieList;
+        mMovieImages = movieImages;
         mListAdapter.updateList(movieList);
     }
 
@@ -66,14 +69,18 @@ public class NewMoviesFragment extends BaseFragment {
         @Override
         public void onItemClick(View v, int position) {
            // Toast.makeText(CinemaApplication.getAppContext(), "In Theaters " + position, Toast.LENGTH_SHORT).show();
-            String movieId = mMovieList.get(position).getId();
+
+
             Intent intent = new Intent(getActivity(), MovieDetailsActivity.class);
 
             View sharedView = v.findViewById(R.id.newMovieTitle);
             String transitionName = getString(R.string.element_transition_name);
 
             ActivityOptions transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(getActivity(), sharedView, transitionName);
-            intent.putExtra(AppConstants.MOVIE_ID,movieId);
+            intent.putExtra(AppConstants.MOVIE_ID, mMovieList.get(position).getId());
+            intent.putExtra(AppConstants.MOVIE_TITLE, mMovieList.get(position).getTitle());
+            if (mMovieImages.get(mMovieList.get(position).getTitle()) != null)
+                //  intent.putExtra(AppConstants.MOVIE_BACKDROP, mMovieImages.get(mMovieList.get(position).getTitle()).getBackdropPath());
             getActivity().startActivity(intent, transitionActivityOptions.toBundle());
 
         }

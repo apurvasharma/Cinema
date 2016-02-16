@@ -1,26 +1,64 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
     android:id="@+id/newMovieListItemContainer"
-    style="@style/list_item_container">
+    android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/newMovieImage"
-        style="@style/list_item_thumbnail" />
+    <android.support.v7.widget.CardView
+        android:id="@+id/crd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/half_card_margin"
+        android:layout_marginBottom="@dimen/half_card_margin"
+        android:layout_marginLeft="@dimen/half_card_margin"
+        android:layout_marginRight="@dimen/half_card_margin">
+
+        <RelativeLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/newMovieImage"
+                style="@style/list_item_thumbnail" />
 
 
-    <TextView
-        android:id="@+id/newMovieTitle"
-        android:transitionName="@string/element_transition_name"
-        android:layout_alignTop="@+id/newMovieImage"
-        android:layout_toRightOf="@+id/newMovieImage"
-        android:layout_toEndOf="@+id/newMovieImage"
-        style="@style/list_item_title" />
+            <TextView
+                android:id="@+id/newMovieTitle"
+                android:text="title"
+                android:textAllCaps="true"
+                style="@style/list_item_title"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@+id/newMovieImage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
 
-    <RatingBar
-        android:id="@+id/newMovieRatingBar"
-        style="@style/list_item_ratingBar"
-        android:layout_below="@id/newMovieTitle"
-        android:layout_alignLeft="@id/newMovieTitle"
-        android:layout_alignStart="@id/newMovieTitle" />
+            <RatingBar
+                android:id="@+id/newMovieRatingBar"
+                style="@style/list_item_ratingBar"
+                android:layout_below="@+id/newMovieTitle"
+                android:layout_toEndOf="@+id/newMovieImage"
+
+                />
+
+            <TextView
+                android:id="@+id/newMovieActors"
+                android:text="Actor 1,  Actor 2"
+                style="@style/list_item_subtitle"
+                android:layout_toEndOf="@+id/newMovieImage"
+                android:layout_below="@+id/newMovieRatingBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/newMovieReleaseDate"
+                android:layout_toEndOf="@+id/newMovieImage"
+                android:layout_below="@+id/newMovieActors"
+                style="@style/list_item_subtitle" />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
 
 </RelativeLayout>
