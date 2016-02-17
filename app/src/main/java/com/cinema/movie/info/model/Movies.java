@@ -67,6 +67,9 @@ public class Movies {
         return posters;
     }
 
+    public List<MovieListResponse.AbridgedCast> getAbridgedCast() {
+        return abridgedCast;
+    }
 
     public MovieListResponse.ReleaseDates getReleaseDates() {
         return releaseDates;

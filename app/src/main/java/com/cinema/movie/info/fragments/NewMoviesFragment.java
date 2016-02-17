@@ -15,14 +15,10 @@ import android.widget.ProgressBar;
 import com.cinema.movie.info.R;
 import com.cinema.movie.info.activity.MovieDetailsActivity;
 import com.cinema.movie.info.adapter.NewMoviesListAdapter;
-import com.cinema.movie.info.model.MovieImagesResponse;
-import com.cinema.movie.info.model.MovieListResponse;
 import com.cinema.movie.info.model.Movies;
 import com.cinema.movie.info.utils.AppConstants;
-import com.cinema.movie.info.utils.SimpleDividerItemDecoration;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 
 
@@ -34,7 +30,6 @@ public class NewMoviesFragment extends BaseFragment {
 
     private List<Movies> mMovieList = Collections.emptyList();
     private NewMoviesListAdapter mListAdapter;
-    private HashMap<String, MovieImagesResponse.Result> mMovieImages;
 
     public NewMoviesFragment(NewMoviesListAdapter listAdapter) {
         mListAdapter = listAdapter;
@@ -59,9 +54,8 @@ public class NewMoviesFragment extends BaseFragment {
     }
 
     @Override
-    public void updateAdapter(List<Movies> movieList, HashMap<String, MovieImagesResponse.Result> movieImages) {
+    public void updateAdapter(List<Movies> movieList) {
         mMovieList = movieList;
-        mMovieImages = movieImages;
         mListAdapter.updateList(movieList);
     }
 
@@ -79,8 +73,6 @@ public class NewMoviesFragment extends BaseFragment {
             ActivityOptions transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(getActivity(), sharedView, transitionName);
             intent.putExtra(AppConstants.MOVIE_ID, mMovieList.get(position).getId());
             intent.putExtra(AppConstants.MOVIE_TITLE, mMovieList.get(position).getTitle());
-            if (mMovieImages.get(mMovieList.get(position).getTitle()) != null)
-                //  intent.putExtra(AppConstants.MOVIE_BACKDROP, mMovieImages.get(mMovieList.get(position).getTitle()).getBackdropPath());
             getActivity().startActivity(intent, transitionActivityOptions.toBundle());
 
         }

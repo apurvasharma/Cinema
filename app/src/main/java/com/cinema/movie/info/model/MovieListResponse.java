@@ -37,6 +37,9 @@ public class MovieListResponse {
         @Expose
         public List<String> characters = new ArrayList<String>();
 
+        public String getName() {
+            return name;
+        }
     }
 
     public class AlternateIds {

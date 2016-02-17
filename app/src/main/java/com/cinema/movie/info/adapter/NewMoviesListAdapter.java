@@ -1,6 +1,5 @@
 package com.cinema.movie.info.adapter;
 
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.LayerDrawable;
 import android.support.v4.graphics.drawable.DrawableCompat;
@@ -17,13 +16,11 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.cinema.movie.info.R;
-import com.cinema.movie.info.model.MovieImagesResponse;
 import com.cinema.movie.info.model.Movies;
 import com.cinema.movie.info.network.VolleySingleton;
 import com.cinema.movie.info.utils.AppUtils;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -52,21 +49,31 @@ public class NewMoviesListAdapter extends  RecyclerView.Adapter<NewMoviesListAda
     @Override
     public void onBindViewHolder(final MoviesInTheaterViewHolder holder, int position) {
 
-        //set value of view at a given position
+
         Movies movies = newMovieList.get(position);
+
+        //set title
         holder.movieTitle.setText(movies.getTitle());
 
         //convert user-rating out of 5
         float userRating = (movies.getRatings().getAudienceScore() * 5) / 100;
         LayerDrawable layerDrawable = (LayerDrawable) holder.movieRating.getProgressDrawable();
-        // DrawableCompat.setTint(DrawableCompat.wrap(layerDrawable.getDrawable(0)), Color.RED);   // Empty star
-        // DrawableCompat.setTint(DrawableCompat.wrap(layerDrawable.getDrawable(1)), Color.GREEN); // Partial star
         DrawableCompat.setTint(DrawableCompat.wrap(layerDrawable.getDrawable(2)), Color.rgb(229, 193, 0)); // Full star
         holder.movieRating.setRating(userRating);
 
-
+        //set release Date
         String releaseDate = AppUtils.changeDateFormat(movies.getReleaseDates().getTheater());
         holder.movieReleaseDate.setText(releaseDate);
+
+        //set actors
+        String actors = "";
+        if (movies.abridgedCast != null && movies.abridgedCast.size() > 0) {
+            actors = actors.concat(movies.abridgedCast.get(0).getName());
+            if(movies.abridgedCast.size() >= 2)
+                actors = actors.concat(", "+movies.abridgedCast.get(1).getName());
+
+        }
+        holder.movieActors.setText(actors);
 
         //load thumbnail from JSON image URL
         String imageURL = movies.getPosters().getThumbnail();
@@ -124,6 +131,7 @@ public class NewMoviesListAdapter extends  RecyclerView.Adapter<NewMoviesListAda
         public ImageView movieImage;
         public RatingBar movieRating;
         public TextView movieReleaseDate;
+        public TextView movieActors;
 
 
         public MoviesInTheaterViewHolder(View itemView) {
@@ -133,6 +141,7 @@ public class NewMoviesListAdapter extends  RecyclerView.Adapter<NewMoviesListAda
             movieImage = (ImageView) itemView.findViewById(R.id.newMovieImage);
             movieReleaseDate = (TextView) itemView.findViewById(R.id.newMovieReleaseDate);
             itemContainer = (RelativeLayout) itemView.findViewById(R.id.newMovieListItemContainer);
+            movieActors = (TextView) itemView.findViewById(R.id.newMovieActors);
             itemContainer.setOnClickListener(this);
         }
 

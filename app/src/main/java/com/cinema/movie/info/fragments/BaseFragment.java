@@ -62,7 +62,7 @@ public abstract class BaseFragment extends Fragment {
                             MovieListResponse movieResponse = gson.fromJson(response, MovieListResponse.class);
                             List<Movies> movieList = movieResponse.getMovies();
                             if (movieList != null) {
-                                updateAdapter(movieList,movieImages);
+                                updateAdapter(movieList);
                             }
                         }
                         //  Log.d("response = ", response);
@@ -95,6 +95,6 @@ public abstract class BaseFragment extends Fragment {
         requestQueue.add(stringRequest);
     }
 
-    public abstract void updateAdapter(List<Movies> movieList,HashMap<String,MovieImagesResponse.Result> movieImages);
+    public abstract void updateAdapter(List<Movies> movieList);
 
 }

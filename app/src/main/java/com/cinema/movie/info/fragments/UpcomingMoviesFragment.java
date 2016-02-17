@@ -34,7 +34,6 @@ public class UpcomingMoviesFragment extends BaseFragment {
 
     private List<Movies> mMovieList = Collections.emptyList();
     private UpcomingMoviesListAdapter mListAdapter;
-    private HashMap<String, MovieImagesResponse.Result> mMovieImages;
 
     public UpcomingMoviesFragment(UpcomingMoviesListAdapter listAdapter) {
         mListAdapter = listAdapter;
@@ -59,9 +58,8 @@ public class UpcomingMoviesFragment extends BaseFragment {
     }
 
     @Override
-    public void updateAdapter(List<Movies> movieList,HashMap<String, MovieImagesResponse.Result> movieImages) {
+    public void updateAdapter(List<Movies> movieList) {
         mMovieList = movieList;
-        mMovieImages = movieImages;
         mListAdapter.updateList(movieList);
     }
 

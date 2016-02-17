@@ -16,21 +16,12 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.cinema.movie.info.R;
-import com.cinema.movie.info.model.MovieImagesResponse;
 import com.cinema.movie.info.model.Movies;
 import com.cinema.movie.info.network.VolleySingleton;
-import com.cinema.movie.info.utils.AppConstants;
 import com.cinema.movie.info.utils.AppUtils;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
 /**
  * Created by Apurva on 11/29/2015.
@@ -64,20 +55,30 @@ public class UpcomingMoviesListAdapter extends  RecyclerView.Adapter<UpcomingMov
     @Override
     public void onBindViewHolder(final MoviesComingSoonViewHolder holder, int position) {
 
-        //set value of view at a given position
         Movies movies = upcomingMovieList.get(position);
+
+        //set title
         holder.movieTitle.setText(movies.getTitle());
 
+        //set release Date
         String releaseDate = AppUtils.changeDateFormat(movies.getReleaseDates().getTheater());
         holder.movieReleaseDate.setText(releaseDate);
 
         //convert user-rating out of 5
         float userRating = (movies.getRatings().getAudienceScore() * 5) / 100;
-
         LayerDrawable layerDrawable = (LayerDrawable) holder.movieRating.getProgressDrawable();
         DrawableCompat.setTint(DrawableCompat.wrap(layerDrawable.getDrawable(2)), Color.rgb(229, 193, 0)); // Full star
-
         holder.movieRating.setRating(userRating);
+
+        //set actors
+        String actors = "";
+        if (movies.abridgedCast != null && movies.abridgedCast.size() > 0) {
+            actors = actors.concat(movies.abridgedCast.get(0).getName());
+            if(movies.abridgedCast.size() >= 2)
+                actors = actors.concat(", "+movies.abridgedCast.get(1).getName());
+
+        }
+        holder.movieActors.setText(actors);
 
         //load thumbnail from JSON image URL
         String imageURL = movies.getPosters().getThumbnail();
@@ -126,6 +127,7 @@ public class UpcomingMoviesListAdapter extends  RecyclerView.Adapter<UpcomingMov
         public ImageView movieImage;
         public RatingBar movieRating;
         public TextView movieReleaseDate;
+        public TextView movieActors;
 
         public MoviesComingSoonViewHolder(View itemView) {
             super(itemView);
@@ -134,6 +136,7 @@ public class UpcomingMoviesListAdapter extends  RecyclerView.Adapter<UpcomingMov
             movieImage = (ImageView) itemView.findViewById(R.id.upcomingMovieImage);
             movieReleaseDate = (TextView) itemView.findViewById(R.id.upcomingMovieReleaseDate);
             itemContainer = (RelativeLayout) itemView.findViewById(R.id.upcomingMovieListItemContainer);
+            movieActors = (TextView) itemView.findViewById(R.id.upcomingMovieActors);
             itemContainer.setOnClickListener(this);
         }
 
