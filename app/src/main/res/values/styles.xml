@@ -1,17 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+    <style name="RobotoTextViewStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="RobotoButtonStyle" parent="android:Widget.Holo.Button">
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="CustomTheme" parent="Base.Theme.DesignDemo">
+        <item name="android:windowContentTransitions">true</item>
+        <item name="android:textViewStyle">@style/TextAppearance.AppCompat</item>
+        <item name="android:buttonStyle">@style/RobotoButtonStyle</item>
+    </style>
+
+
+    <style name="Base.Theme.DesignDemo" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@color/window_background</item>
     </style>
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+
+    <style name="Widget.CardContent" parent="android:Widget">
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:paddingTop">24dp</item>
+        <item name="android:paddingBottom">24dp</item>
+        <item name="android:orientation">vertical</item>
     </style>
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="cardview">
+        <item name="android:layout_marginTop">@dimen/half_card_margin</item>
+        <item name="android:layout_marginBottom">@dimen/half_card_margin</item>
+        <item name="android:layout_marginLeft">@dimen/half_card_margin</item>
+        <item name="android:layout_marginRight">@dimen/half_card_margin</item>
+    </style>
+
+    <style name="list_item_container">
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:padding">15dp</item>
+        <item name="android:layout_marginBottom">1dp</item>
+        <!--<item name="android:background">@color/listItemBackground</item>-->
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="list_item_thumbnail">
+        <item name="android:scaleType">fitXY</item>
+        <item name="android:layout_width">80dp</item>
+        <item name="android:layout_height">100dp</item>
+    </style>
+
+    <style name="list_item_title">
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Title</item>
+        <item name="android:transitionName">@string/element_transition_name</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:paddingTop">2dp</item>
+        <item name="android:layout_marginRight">18dp</item>
+        <!--<item name="android:lines">3</item>-->
+        <item name="android:ellipsize">end</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/colorPrimaryText</item>
+        <item name="android:layout_marginLeft">18dp</item>
+        <!--<item name="android:textSize">20sp</item>-->
+    </style>
+
+    <style name="list_item_subtitle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/colorSecondaryText</item>
+        <item name="android:textAppearance">?attr/textAppearanceListItemSmall</item>
+        <item name="android:layout_marginRight">18dp</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:layout_marginLeft">18dp</item>
+    </style>
+
+    <style name="list_item_ratingBar" parent="android:Widget.Holo.Light.RatingBar.Small" >
+        <item name="android:isIndicator">true</item>
+        <item name="android:numStars">1</item>
+        <item name="android:rating">1</item>
+        <item name="android:progressTint">@color/ratingBarStarColor</item>
+        <item name="android:progressBackgroundTint">@color/ratingBarStarColor</item>
+        <item name="android:secondaryProgressTint">@color/ratingBarStarColor</item>
+        <item name="android:stepSize">0.25</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginRight">5dp</item>
+    </style>
+
+    <style name="list_item_rating">
+        <item name="android:layout_marginLeft">18dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/colorSecondaryText</item>
+        <item name="android:textAppearance">?attr/textAppearanceListItemSmall</item>
+        <item name="android:layout_marginRight">5dp</item>
+        <item name="android:paddingTop">5dp</item>
+
+    </style>
+
+    <style name="MaterialAnimations" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <!-- specify enter and exit transitions -->
+        <item name="android:windowEnterTransition">@android:transition/explode</item>
+        <item name="android:windowExitTransition">@android:transition/explode</item>
+        <!-- specify shared element transitions -->
+        <item name="android:windowSharedElementEnterTransition">@android:transition/move</item>
+        <item name="android:windowSharedElementExitTransition">@android:transition/move</item>
+    </style>
 
 </resources>

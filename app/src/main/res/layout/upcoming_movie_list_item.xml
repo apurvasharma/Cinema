@@ -1,0 +1,65 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:id="@+id/upcomingMovieListItemContainer"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/crd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/cardview">
+
+        <RelativeLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/upcomingMovieImage"
+                style="@style/list_item_thumbnail" />
+
+
+            <TextView
+                android:id="@+id/upcomingMovieTitle"
+                android:text="title"
+                android:textAllCaps="true"
+                style="@style/list_item_title"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@+id/upcomingMovieImage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/upcomingMovieRating"
+                style="@style/list_item_rating"
+                android:layout_below="@+id/upcomingMovieTitle"
+                android:layout_toEndOf="@+id/upcomingMovieImage" />
+
+            <RatingBar
+                android:id="@+id/upcomingMovieRatingBar"
+                style="@style/list_item_ratingBar"
+                android:layout_below="@+id/upcomingMovieTitle"
+                android:layout_toEndOf="@+id/upcomingMovieRating" />
+
+
+            <TextView
+                android:id="@+id/upcomingMovieActors"
+                android:text="Actor 1,  Actor 2"
+                style="@style/list_item_subtitle"
+                android:layout_toEndOf="@+id/upcomingMovieImage"
+                android:layout_below="@+id/upcomingMovieRatingBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/upcomingMovieReleaseDate"
+                android:layout_toEndOf="@+id/upcomingMovieImage"
+                android:layout_below="@+id/upcomingMovieActors"
+                style="@style/list_item_subtitle" />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+
+</RelativeLayout>
