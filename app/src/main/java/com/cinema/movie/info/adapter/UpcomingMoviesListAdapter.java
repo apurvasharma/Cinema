@@ -64,11 +64,11 @@ public class UpcomingMoviesListAdapter extends  RecyclerView.Adapter<UpcomingMov
         String releaseDate = AppUtils.changeDateFormat(movies.getReleaseDates().getTheater());
         holder.movieReleaseDate.setText(releaseDate);
 
-        //convert user-rating out of 5
-        float userRating = (movies.getRatings().getAudienceScore() * 5) / 100;
-        LayerDrawable layerDrawable = (LayerDrawable) holder.movieRating.getProgressDrawable();
-        DrawableCompat.setTint(DrawableCompat.wrap(layerDrawable.getDrawable(2)), Color.rgb(229, 193, 0)); // Full star
-        holder.movieRating.setRating(userRating);
+        //convert user-rating out of 10
+        double score = movies.getRatings().getAudienceScore();
+        float userRating = (float) ((score / 100) * 10);
+        String rating = "" + userRating;
+        holder.movieRating.setText(rating);
 
         //set actors
         String actors = "";
@@ -125,13 +125,13 @@ public class UpcomingMoviesListAdapter extends  RecyclerView.Adapter<UpcomingMov
         public RelativeLayout itemContainer;
         public TextView movieTitle;
         public ImageView movieImage;
-        public RatingBar movieRating;
+        public TextView movieRating;
         public TextView movieReleaseDate;
         public TextView movieActors;
 
         public MoviesComingSoonViewHolder(View itemView) {
             super(itemView);
-            movieRating = (RatingBar) itemView.findViewById(R.id.upcomingMovieRatingBar);
+            movieRating = (TextView) itemView.findViewById(R.id.upcomingMovieRating);
             movieTitle = (TextView) itemView.findViewById(R.id.upcomingMovieTitle);
             movieImage = (ImageView) itemView.findViewById(R.id.upcomingMovieImage);
             movieReleaseDate = (TextView) itemView.findViewById(R.id.upcomingMovieReleaseDate);

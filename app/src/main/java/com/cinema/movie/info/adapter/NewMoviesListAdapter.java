@@ -1,15 +1,11 @@
 package com.cinema.movie.info.adapter;
 
-import android.graphics.Color;
-import android.graphics.drawable.LayerDrawable;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -32,12 +28,10 @@ public class NewMoviesListAdapter extends  RecyclerView.Adapter<NewMoviesListAda
     private ImageLoader imageLoader;
     private static final String logTAG = "NewMoviesListAdapter";
     private InTheatersItemClickListener mItemClickListener;
-    private String mApiKey;
 
-    public NewMoviesListAdapter(String api_key) {
+    public NewMoviesListAdapter() {
         VolleySingleton volleySingleton = VolleySingleton.getInstance();
         imageLoader = volleySingleton.getImageLoader();
-        mApiKey = api_key;
     }
 
     @Override
@@ -55,11 +49,12 @@ public class NewMoviesListAdapter extends  RecyclerView.Adapter<NewMoviesListAda
         //set title
         holder.movieTitle.setText(movies.getTitle());
 
-        //convert user-rating out of 5
-        float userRating = (movies.getRatings().getAudienceScore() * 5) / 100;
-        LayerDrawable layerDrawable = (LayerDrawable) holder.movieRating.getProgressDrawable();
-        DrawableCompat.setTint(DrawableCompat.wrap(layerDrawable.getDrawable(2)), Color.rgb(229, 193, 0)); // Full star
-        holder.movieRating.setRating(userRating);
+        //convert user-rating out of 10
+        double score = movies.getRatings().getAudienceScore();
+        float userRating = (float) ((score / 100) * 10);
+        String rating = "" + userRating;
+        holder.movieRating.setText(rating);
+
 
         //set release Date
         String releaseDate = AppUtils.changeDateFormat(movies.getReleaseDates().getTheater());
@@ -129,14 +124,14 @@ public class NewMoviesListAdapter extends  RecyclerView.Adapter<NewMoviesListAda
         public RelativeLayout itemContainer;
         public TextView movieTitle;
         public ImageView movieImage;
-        public RatingBar movieRating;
+        public TextView movieRating;
         public TextView movieReleaseDate;
         public TextView movieActors;
 
 
         public MoviesInTheaterViewHolder(View itemView) {
             super(itemView);
-            movieRating = (RatingBar) itemView.findViewById(R.id.newMovieRatingBar);
+            movieRating = (TextView) itemView.findViewById(R.id.newMovieRating);
             movieTitle = (TextView) itemView.findViewById(R.id.newMovieTitle);
             movieImage = (ImageView) itemView.findViewById(R.id.newMovieImage);
             movieReleaseDate = (TextView) itemView.findViewById(R.id.newMovieReleaseDate);

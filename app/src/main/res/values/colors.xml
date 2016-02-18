@@ -10,4 +10,5 @@
     <color name="window_background">#FFF5F5F5</color>
     <color name="recyclerViewBackground">#ECEFF1</color>
     <color name="listItemBackground">#FFFFFF</color>
+    <color name="ratingBarStarColor">#E5C100</color>
 </resources>

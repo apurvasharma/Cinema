@@ -7,10 +7,8 @@
         android:id="@+id/crd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/half_card_margin"
-        android:layout_marginBottom="@dimen/half_card_margin"
-        android:layout_marginLeft="@dimen/half_card_margin"
-        android:layout_marginRight="@dimen/half_card_margin">
+        style="@style/cardview"
+       >
 
         <RelativeLayout
             android:orientation="vertical"
@@ -33,13 +31,19 @@
                 android:layout_height="wrap_content" />
 
 
+            <TextView
+                android:id="@+id/newMovieRating"
+                android:layout_toEndOf="@+id/newMovieImage"
+                android:layout_below="@+id/newMovieTitle"
+                style="@style/list_item_rating" />
+
             <RatingBar
                 android:id="@+id/newMovieRatingBar"
                 style="@style/list_item_ratingBar"
                 android:layout_below="@+id/newMovieTitle"
-                android:layout_toEndOf="@+id/newMovieImage"
+                android:layout_toEndOf="@+id/newMovieRating" />
 
-                />
+
 
             <TextView
                 android:id="@+id/newMovieActors"
