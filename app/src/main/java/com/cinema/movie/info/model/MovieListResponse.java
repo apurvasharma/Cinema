@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MovieResponse {
+public class MovieListResponse {
 
     @SerializedName("total")
     @Expose
@@ -37,6 +37,9 @@ public class MovieResponse {
         @Expose
         public List<String> characters = new ArrayList<String>();
 
+        public String getName() {
+            return name;
+        }
     }
 
     public class AlternateIds {
