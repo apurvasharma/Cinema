@@ -1,12 +1,7 @@
-package com.cinema.movie.info.fragments;
+package com.cinema.movie.info.network;
 
-import android.annotation.SuppressLint;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -18,60 +13,57 @@ import com.android.volley.Response;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.cinema.movie.info.R;
+import com.cinema.movie.info.model.MovieDetailsResponse;
 import com.cinema.movie.info.model.MovieImagesResponse;
 import com.cinema.movie.info.model.MovieListResponse;
-import com.cinema.movie.info.model.Movies;
-import com.cinema.movie.info.network.CinemaApplication;
-import com.cinema.movie.info.network.VolleySingleton;
 import com.google.gson.Gson;
 
-import java.util.HashMap;
-import java.util.List;
-
 /**
- * Created by Apurva on 12/30/2015.
+ * Created by Apurva on 2/22/2016.
  */
-@SuppressLint("ValidFragment")
-public abstract class BaseFragment extends Fragment {
-    private Gson gson = new Gson();
-    protected ProgressBar mProgressBar;
-    protected HashMap<String, MovieImagesResponse.Result> movieImages = new HashMap<>();
+public class VolleyNetworkRequest {
+    private RequestQueue mRequestQueue;
+    private Gson mGson;
+    private Object mPojoClass;
+    public static VolleyNetworkRequest volleyNetworkRequest;
 
+    private VolleyNetworkRequest() {
+        mRequestQueue = VolleySingleton.getInstance().getRequestQueue();
+        mGson = new Gson();
+    }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return null;
+    public static VolleyNetworkRequest getInstance() {
+        if (volleyNetworkRequest == null)
+            volleyNetworkRequest = new VolleyNetworkRequest();
+        return volleyNetworkRequest;
     }
 
 
-    protected void makeNetworkRequest(String URL) {
-        RequestQueue requestQueue = VolleySingleton.getInstance().getRequestQueue();
-
-        //start progress bar
-        mProgressBar.setVisibility(View.VISIBLE);
-
+    public void makeNetworkRequest(final String URL, final Object responseClass, final VolleyNetworkResponse volleyNetworkResponse, final ProgressBar progressBar) {
         // Request a string response from the given URL.
+
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         //stop progress bar
-                        mProgressBar.setVisibility(View.GONE);
+                        progressBar.setVisibility(View.GONE);
+                        mPojoClass = responseClass;
+                        if (mPojoClass == MovieImagesResponse.class)
+                            mPojoClass = mGson.fromJson(response, MovieImagesResponse.class);
+                        else if (mPojoClass == MovieListResponse.class)
+                            mPojoClass = mGson.fromJson(response, MovieListResponse.class);
+                        else if (mPojoClass == MovieDetailsResponse.class)
+                            mPojoClass = mGson.fromJson(response, MovieDetailsResponse.class);
 
-                            MovieListResponse movieResponse = gson.fromJson(response, MovieListResponse.class);
-                            List<Movies> movieList = movieResponse.getMovies();
-                            if (movieList != null) {
-                                updateAdapter(movieList);
-                            }
-                        }
-                        //  Log.d("response = ", response);
-
+                        volleyNetworkResponse.processNetworkResponse(mPojoClass);
+                        Log.d("response = ", response);
+                    }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 //stop progress bar
-                mProgressBar.setVisibility(View.GONE);
+                progressBar.setVisibility(View.GONE);
                 Toast.makeText(CinemaApplication.getAppContext(), error.getMessage(), Toast.LENGTH_LONG).show();
 
                 NetworkResponse networkResponse = error.networkResponse;
@@ -92,9 +84,10 @@ public abstract class BaseFragment extends Fragment {
         });
 
         // Add the request to the Volley RequestQueue
-        requestQueue.add(stringRequest);
+        mRequestQueue.add(stringRequest);
+
+
     }
 
-    public abstract void updateAdapter(List<Movies> movieList);
 
 }

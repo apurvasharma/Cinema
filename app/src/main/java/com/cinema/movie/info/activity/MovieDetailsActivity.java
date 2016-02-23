@@ -4,22 +4,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.volley.NetworkError;
-import com.android.volley.NetworkResponse;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.ImageLoader;
 import com.cinema.movie.info.R;
-import com.cinema.movie.info.model.MovieDetailsResponse;
-import com.cinema.movie.info.network.CinemaApplication;
+import com.cinema.movie.info.model.MovieImagesResponse;
+import com.cinema.movie.info.model.MovieListResponse;
+import com.cinema.movie.info.network.VolleyNetworkRequest;
+import com.cinema.movie.info.network.VolleyNetworkResponse;
 import com.cinema.movie.info.network.VolleySingleton;
 import com.cinema.movie.info.utils.AppConstants;
 import com.google.gson.Gson;
@@ -27,78 +22,60 @@ import com.google.gson.Gson;
 /**
  * Created by Apurva on 2/10/2016.
  */
-public class MovieDetailsActivity extends AppCompatActivity {
+public class MovieDetailsActivity extends AppCompatActivity implements VolleyNetworkResponse {
     private ProgressBar mProgressBar;
     private Gson gson = new Gson();
-
+    private ImageLoader imageLoader;
+    private ImageView mBackdrop;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.movie_details);
-
+        VolleySingleton volleySingleton = VolleySingleton.getInstance();
+        imageLoader = volleySingleton.getImageLoader();
+        mProgressBar = (ProgressBar) findViewById(R.id.movieDetailsProgressBar);
         TextView mMovieTitleTV = (TextView) findViewById(R.id.collapsingToolbarTitle);
+        mBackdrop = (ImageView) findViewById(R.id.backdrop);
         Intent intent = getIntent();
         String movieId = intent.getStringExtra(AppConstants.MOVIE_ID);
         String movieTitle = intent.getStringExtra(AppConstants.MOVIE_TITLE);
-        mMovieTitleTV.setText(movieTitle);
-      //  makeNetworkRequest(AppConstants.getMovieDetailsUrl(movieId));
+        if ((movieTitle != null) && (movieId != null)) {
+            String title = movieTitle.replaceAll(" ", "%20");
+            mMovieTitleTV.setText(movieTitle);
+            // VolleyNetworkRequest.getInstance().makeNetworkRequest(AppConstants.getMovieDetailsUrl(movieId),this);
+            VolleyNetworkRequest.getInstance().makeNetworkRequest(AppConstants.getMovieBackdropUrl(getString(R.string.mdb_api_key), title),MovieImagesResponse.class, this, mProgressBar);
+
+        }
     }
 
-    protected void makeNetworkRequest(String URL) {
-        URL = URL.concat(getString(R.string.rt_api_key));
-        RequestQueue requestQueue = VolleySingleton.getInstance().getRequestQueue();
 
-        //start progress bar;
-        mProgressBar.setVisibility(View.VISIBLE);
+    private void displayBackdrop(MovieImagesResponse movieImagesResponse) {
+        if (movieImagesResponse.getResults() != null && movieImagesResponse.getResults().size() > 0) {
+            String backdropPath = movieImagesResponse.getResults().get(0).getBackdropPath();
+            if (backdropPath != null) {
 
-        // Request a string response from the given URL.
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL,
-                new Response.Listener<String>() {
+                imageLoader.get(AppConstants.getPosterURl(backdropPath), new ImageLoader.ImageListener() {
                     @Override
-                    public void onResponse(String response) {
-                        //stop progress bar
-                        mProgressBar.setVisibility(View.GONE);
-
-
-                            MovieDetailsResponse movieDetailsResponse = gson.fromJson(response, MovieDetailsResponse.class);
-
-                            if (movieDetailsResponse != null) {
-                                display(movieDetailsResponse);
-                            }
-
-                        //  Log.d("response = ", response);
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                //stop progress bar
-                mProgressBar.setVisibility(View.GONE);
-                Toast.makeText(CinemaApplication.getAppContext(), error.getMessage(), Toast.LENGTH_LONG).show();
-
-                NetworkResponse networkResponse = error.networkResponse;
-                if (networkResponse != null) {
-
-                    //if web server fails to response
-                    if (networkResponse.statusCode == 404) {
-                        Log.d("ERROR = ", networkResponse.toString());
+                    public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
+                        if (response.getBitmap() != null) {
+                            mBackdrop.setImageBitmap(response.getBitmap());
+                        }
                     }
 
-                    //if unable to connect to internet
-                    if (error instanceof NetworkError || error instanceof TimeoutError) {
-                        Log.d("ERROR = ", networkResponse.toString());
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("class", "VolleyError");
                     }
-
-                }
+                });
             }
-        });
-
-        // Add the request to the Volley RequestQueue
-        requestQueue.add(stringRequest);
+        }
     }
 
-    private void display(MovieDetailsResponse movieDetailsResponse) {
 
+    @Override
+    public void processNetworkResponse(Object pojoClass) {
+        if ((pojoClass != null) && (pojoClass instanceof MovieImagesResponse))
+            displayBackdrop((MovieImagesResponse) pojoClass);
     }
-
 }
