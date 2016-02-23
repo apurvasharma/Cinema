@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.cinema.movie.info.R;
-import com.cinema.movie.info.model.Movies;
+import com.cinema.movie.info.model.MovieListResponse;
 import com.cinema.movie.info.network.VolleySingleton;
 import com.cinema.movie.info.utils.AppUtils;
 
@@ -24,7 +24,7 @@ import java.util.List;
  */
 public class NewMoviesListAdapter extends  RecyclerView.Adapter<NewMoviesListAdapter.MoviesInTheaterViewHolder> {
 
-    private List<Movies> newMovieList = Collections.emptyList();
+    private List<MovieListResponse.Movies> newMovieList = Collections.emptyList();
     private ImageLoader imageLoader;
     private static final String logTAG = "NewMoviesListAdapter";
     private InTheatersItemClickListener mItemClickListener;
@@ -44,7 +44,7 @@ public class NewMoviesListAdapter extends  RecyclerView.Adapter<NewMoviesListAda
     public void onBindViewHolder(final MoviesInTheaterViewHolder holder, int position) {
 
 
-        Movies movies = newMovieList.get(position);
+        MovieListResponse.Movies movies = newMovieList.get(position);
 
         //set title
         holder.movieTitle.setText(movies.getTitle());
@@ -104,7 +104,7 @@ public class NewMoviesListAdapter extends  RecyclerView.Adapter<NewMoviesListAda
 
     }
 
-    public void updateList(List<Movies> newMovieList) {
+    public void updateList(List<MovieListResponse.Movies> newMovieList) {
         //update the adapter to display the list of new movies
         this.newMovieList = newMovieList;
         notifyDataSetChanged();

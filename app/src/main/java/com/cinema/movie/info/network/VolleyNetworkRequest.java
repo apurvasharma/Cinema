@@ -39,7 +39,7 @@ public class VolleyNetworkRequest {
     }
 
 
-    public void makeNetworkRequest(final String URL, final Object responseClass, final VolleyNetworkResponse volleyNetworkResponse, final ProgressBar progressBar) {
+    public void makeNetworkRequest(final String URL, final Object responseClass, final IVolleyNetworkResponse volleyNetworkResponse, final ProgressBar progressBar) {
         // Request a string response from the given URL.
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URL,

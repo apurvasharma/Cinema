@@ -5,6 +5,6 @@ import com.cinema.movie.info.model.MovieListResponse;
 /**
  * Created by Apurva on 2/22/2016.
  */
-public interface VolleyNetworkResponse {
+public interface IVolleyNetworkResponse {
     void processNetworkResponse(Object pojoClass);
 }

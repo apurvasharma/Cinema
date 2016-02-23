@@ -136,4 +136,74 @@ public class MovieListResponse {
             return theater;
         }
     }
+
+    /**
+     * Created by Apurva on 12/27/2015.
+     */
+    public static class Movies {
+        @SerializedName("id")
+        @Expose
+        public String id;
+        @SerializedName("title")
+        @Expose
+        public String title;
+        @SerializedName("year")
+        @Expose
+        public Integer year;
+        @SerializedName("mpaa_rating")
+        @Expose
+        public String mpaaRating;
+        @SerializedName("runtime")
+        @Expose
+        public String runtime;
+        @SerializedName("critics_consensus")
+        @Expose
+        public String criticsConsensus;
+        @SerializedName("release_dates")
+        @Expose
+        public ReleaseDates releaseDates;
+        @SerializedName("ratings")
+        @Expose
+        public Ratings ratings;
+        @SerializedName("synopsis")
+        @Expose
+        public String synopsis;
+        @SerializedName("posters")
+        @Expose
+        public Posters posters;
+        @SerializedName("abridged_cast")
+        @Expose
+        public List<AbridgedCast> abridgedCast = new ArrayList<AbridgedCast>();
+        @SerializedName("alternate_ids")
+        @Expose
+        public AlternateIds alternateIds;
+        @SerializedName("links")
+        @Expose
+        public Links links;
+
+
+        public String getId() {
+            return id;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public Ratings getRatings() {
+            return ratings;
+        }
+
+        public Posters getPosters() {
+            return posters;
+        }
+
+        public List<AbridgedCast> getAbridgedCast() {
+            return abridgedCast;
+        }
+
+        public ReleaseDates getReleaseDates() {
+            return releaseDates;
+        }
+    }
 }

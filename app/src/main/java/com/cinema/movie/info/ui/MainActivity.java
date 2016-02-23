@@ -1,4 +1,4 @@
-package com.cinema.movie.info.activity;
+package com.cinema.movie.info.ui;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -15,17 +15,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ProgressBar;
 
 import com.cinema.movie.info.R;
 import com.cinema.movie.info.adapter.NewMoviesListAdapter;
 import com.cinema.movie.info.adapter.UpcomingMoviesListAdapter;
 import com.cinema.movie.info.adapter.ViewPagerAdapter;
-import com.cinema.movie.info.fragments.NewMoviesFragment;
-import com.cinema.movie.info.fragments.UpcomingMoviesFragment;
 import com.cinema.movie.info.network.CinemaApplication;
-
-import butterknife.Bind;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {

@@ -1,4 +1,4 @@
-package com.cinema.movie.info.activity;
+package com.cinema.movie.info.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,9 +12,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.cinema.movie.info.R;
 import com.cinema.movie.info.model.MovieImagesResponse;
-import com.cinema.movie.info.model.MovieListResponse;
 import com.cinema.movie.info.network.VolleyNetworkRequest;
-import com.cinema.movie.info.network.VolleyNetworkResponse;
+import com.cinema.movie.info.network.IVolleyNetworkResponse;
 import com.cinema.movie.info.network.VolleySingleton;
 import com.cinema.movie.info.utils.AppConstants;
 import com.google.gson.Gson;
@@ -22,9 +21,7 @@ import com.google.gson.Gson;
 /**
  * Created by Apurva on 2/10/2016.
  */
-public class MovieDetailsActivity extends AppCompatActivity implements VolleyNetworkResponse {
-    private ProgressBar mProgressBar;
-    private Gson gson = new Gson();
+public class MovieDetailsActivity extends AppCompatActivity implements IVolleyNetworkResponse {
     private ImageLoader imageLoader;
     private ImageView mBackdrop;
 
@@ -34,7 +31,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements VolleyNet
         setContentView(R.layout.movie_details);
         VolleySingleton volleySingleton = VolleySingleton.getInstance();
         imageLoader = volleySingleton.getImageLoader();
-        mProgressBar = (ProgressBar) findViewById(R.id.movieDetailsProgressBar);
+        ProgressBar mProgressBar = (ProgressBar) findViewById(R.id.movieDetailsProgressBar);
         TextView mMovieTitleTV = (TextView) findViewById(R.id.collapsingToolbarTitle);
         mBackdrop = (ImageView) findViewById(R.id.backdrop);
         Intent intent = getIntent();

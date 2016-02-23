@@ -1,4 +1,4 @@
-package com.cinema.movie.info.fragments;
+package com.cinema.movie.info.ui;
 
 import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
@@ -14,12 +14,10 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.cinema.movie.info.R;
-import com.cinema.movie.info.activity.MovieDetailsActivity;
 import com.cinema.movie.info.adapter.UpcomingMoviesListAdapter;
 import com.cinema.movie.info.model.MovieListResponse;
-import com.cinema.movie.info.model.Movies;
 import com.cinema.movie.info.network.VolleyNetworkRequest;
-import com.cinema.movie.info.network.VolleyNetworkResponse;
+import com.cinema.movie.info.network.IVolleyNetworkResponse;
 import com.cinema.movie.info.utils.AppConstants;
 
 import java.util.Collections;
@@ -30,9 +28,9 @@ import java.util.List;
  * Created by Apurva on 11/22/2015.
  */
 @SuppressLint("ValidFragment")
-public class UpcomingMoviesFragment extends Fragment implements VolleyNetworkResponse {
+public class UpcomingMoviesFragment extends Fragment implements IVolleyNetworkResponse {
 
-    private List<Movies> mMovieList = Collections.emptyList();
+    private List<MovieListResponse.Movies> mMovieList = Collections.emptyList();
     private UpcomingMoviesListAdapter mListAdapter;
 
     public UpcomingMoviesFragment(UpcomingMoviesListAdapter listAdapter) {

@@ -35,10 +35,8 @@ public class VolleySingleton {
     }
 
     public static VolleySingleton getInstance() {
-        if (singleInstance == null) {
+        if (singleInstance == null)
             singleInstance = new VolleySingleton();
-            return singleInstance;
-        }
         return singleInstance;
     }
 
