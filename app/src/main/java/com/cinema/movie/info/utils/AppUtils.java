@@ -2,26 +2,13 @@ package com.cinema.movie.info.utils;
 
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
-import android.util.Log;
 
-import com.android.volley.NetworkError;
-import com.android.volley.NetworkResponse;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.TimeoutError;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.cinema.movie.info.model.MovieImagesResponse;
-import com.cinema.movie.info.network.VolleySingleton;
 import com.google.gson.Gson;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 
 /**

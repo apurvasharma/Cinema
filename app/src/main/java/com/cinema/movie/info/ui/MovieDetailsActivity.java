@@ -14,9 +14,7 @@ import com.cinema.movie.info.R;
 import com.cinema.movie.info.model.MovieImagesResponse;
 import com.cinema.movie.info.network.VolleyNetworkRequest;
 import com.cinema.movie.info.network.IVolleyNetworkResponse;
-import com.cinema.movie.info.network.VolleySingleton;
 import com.cinema.movie.info.utils.AppConstants;
-import com.google.gson.Gson;
 
 /**
  * Created by Apurva on 2/10/2016.
@@ -29,7 +27,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements IVolleyNe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.movie_details);
-        VolleySingleton volleySingleton = VolleySingleton.getInstance();
+        VolleyNetworkRequest.VolleySingleton volleySingleton = VolleyNetworkRequest.VolleySingleton.getInstance();
         imageLoader = volleySingleton.getImageLoader();
         ProgressBar mProgressBar = (ProgressBar) findViewById(R.id.movieDetailsProgressBar);
         TextView mMovieTitleTV = (TextView) findViewById(R.id.collapsingToolbarTitle);

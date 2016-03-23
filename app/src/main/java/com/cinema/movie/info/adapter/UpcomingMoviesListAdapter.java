@@ -13,7 +13,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.cinema.movie.info.R;
 import com.cinema.movie.info.model.MovieListResponse;
-import com.cinema.movie.info.network.VolleySingleton;
+import com.cinema.movie.info.network.VolleyNetworkRequest;
 import com.cinema.movie.info.utils.AppUtils;
 
 import java.util.Collections;
@@ -30,7 +30,7 @@ public class UpcomingMoviesListAdapter extends  RecyclerView.Adapter<UpcomingMov
     UpcomingItemClickListener mItemClickListener;
 
     public UpcomingMoviesListAdapter() {
-        VolleySingleton volleySingleton = VolleySingleton.getInstance();
+        VolleyNetworkRequest.VolleySingleton volleySingleton = VolleyNetworkRequest.VolleySingleton.getInstance();
         imageLoader = volleySingleton.getImageLoader();
     }
 
