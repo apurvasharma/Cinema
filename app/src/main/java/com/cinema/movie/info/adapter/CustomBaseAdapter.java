@@ -7,7 +7,7 @@
 //import android.widget.RatingBar;
 //import android.widget.TextView;
 //
-//import com.cinema.movie.info.model.Movies;
+//import com.cinema.movie.info.model.MovieListResponse.Movies;
 //
 //import java.util.List;
 //
