@@ -2,26 +2,13 @@ package com.cinema.movie.info.utils;
 
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
-import android.util.Log;
 
-import com.android.volley.NetworkError;
-import com.android.volley.NetworkResponse;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.TimeoutError;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.cinema.movie.info.model.MovieImagesResponse;
-import com.cinema.movie.info.network.VolleySingleton;
 import com.google.gson.Gson;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 
 /**
@@ -58,56 +45,6 @@ public class AppUtils {
     }
 
 
-    public static HashMap<String, MovieImagesResponse.Result> makeNetworkRequest(String URL) {
-        RequestQueue requestQueue = VolleySingleton.getInstance().getRequestQueue();
-        final HashMap<String, MovieImagesResponse.Result> movieImages = new HashMap<>();
-
-        // Request a string response from the given URL.
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-
-
-                        MovieImagesResponse movieImagesResponse = gson.fromJson(response, MovieImagesResponse.class);
-                        List<MovieImagesResponse.Result> movieList = movieImagesResponse.getResults();
-                        if (movieList != null) {
-                            for (MovieImagesResponse.Result movie :
-                                    movieList) {
-                                if (!movieImages.containsKey(movie.getTitle()))
-                                    movieImages.put(movie.getTitle().toLowerCase(), movie);
-                            }
-
-                        }
-
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-                //Toast.makeText(CinemaApplication.getAppContext(), error.getMessage(), Toast.LENGTH_LONG).show();
-
-                NetworkResponse networkResponse = error.networkResponse;
-                if (networkResponse != null) {
-
-                    //if web server fails to response
-                    if (networkResponse.statusCode == 404) {
-                        Log.d("ERROR = ", networkResponse.toString());
-                    }
-
-                    //if unable to connect to internet
-                    if (error instanceof NetworkError || error instanceof TimeoutError) {
-                        Log.d("ERROR = ", networkResponse.toString());
-                    }
-
-                }
-            }
-        });
-
-        // Add the request to the Volley RequestQueue
-        requestQueue.add(stringRequest);
-        return movieImages;
-    }
 
 
     public static String changeDateFormat(String inputDate) {

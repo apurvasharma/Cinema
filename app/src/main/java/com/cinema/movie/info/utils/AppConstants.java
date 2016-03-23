@@ -28,4 +28,11 @@ public class AppConstants {
     }
 
 
+    public static String getMovieBackdropUrl(String apiKey, String movieTitle) {
+        return "https://api.themoviedb.org/3/search/movie?api_key=" + apiKey + "&query=" + movieTitle;
+    }
+
+    public static String getPosterURl(String backdropPath) {
+        return "https://image.tmdb.org/t/p/original"+backdropPath;
+    }
 }

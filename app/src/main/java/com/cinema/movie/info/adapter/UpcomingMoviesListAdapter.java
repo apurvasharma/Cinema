@@ -1,23 +1,19 @@
 package com.cinema.movie.info.adapter;
 
-import android.graphics.Color;
-import android.graphics.drawable.LayerDrawable;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.cinema.movie.info.R;
-import com.cinema.movie.info.model.Movies;
-import com.cinema.movie.info.network.VolleySingleton;
+import com.cinema.movie.info.model.MovieListResponse;
+import com.cinema.movie.info.network.VolleyNetworkRequest;
 import com.cinema.movie.info.utils.AppUtils;
 
 import java.util.Collections;
@@ -28,13 +24,13 @@ import java.util.List;
  */
 public class UpcomingMoviesListAdapter extends  RecyclerView.Adapter<UpcomingMoviesListAdapter.MoviesComingSoonViewHolder> {
 
-    private List<Movies> upcomingMovieList = Collections.emptyList();
+    private List<MovieListResponse.Movies> upcomingMovieList = Collections.emptyList();
     private ImageLoader imageLoader;
     private static final String logTAG = "UpcomingMoviesAdapter";
     UpcomingItemClickListener mItemClickListener;
 
     public UpcomingMoviesListAdapter() {
-        VolleySingleton volleySingleton = VolleySingleton.getInstance();
+        VolleyNetworkRequest.VolleySingleton volleySingleton = VolleyNetworkRequest.VolleySingleton.getInstance();
         imageLoader = volleySingleton.getImageLoader();
     }
 
@@ -55,7 +51,7 @@ public class UpcomingMoviesListAdapter extends  RecyclerView.Adapter<UpcomingMov
     @Override
     public void onBindViewHolder(final MoviesComingSoonViewHolder holder, int position) {
 
-        Movies movies = upcomingMovieList.get(position);
+        MovieListResponse.Movies movies = upcomingMovieList.get(position);
 
         //set title
         holder.movieTitle.setText(movies.getTitle());
@@ -113,7 +109,7 @@ public class UpcomingMoviesListAdapter extends  RecyclerView.Adapter<UpcomingMov
 
     }
 
-    public void updateList(List<Movies> newMovieList) {
+    public void updateList(List<MovieListResponse.Movies> newMovieList) {
         //update the adapter to display the list of new movies
         this.upcomingMovieList = newMovieList;
         notifyDataSetChanged();
