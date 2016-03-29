@@ -12,8 +12,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.cinema.movie.info.R;
 import com.cinema.movie.info.model.MovieImagesResponse;
-import com.cinema.movie.info.network.VolleyNetworkRequest;
 import com.cinema.movie.info.network.IVolleyNetworkResponse;
+import com.cinema.movie.info.network.VolleyNetworkRequest;
 import com.cinema.movie.info.utils.AppConstants;
 
 /**
@@ -22,28 +22,34 @@ import com.cinema.movie.info.utils.AppConstants;
 public class MovieDetailsActivity extends AppCompatActivity implements IVolleyNetworkResponse {
     private ImageLoader imageLoader;
     private ImageView mBackdrop;
+    private ProgressBar mProgressBar;
+    private TextView mMovieTitleTV;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.movie_details);
-        VolleyNetworkRequest.VolleySingleton volleySingleton = VolleyNetworkRequest.VolleySingleton.getInstance();
-        imageLoader = volleySingleton.getImageLoader();
-        ProgressBar mProgressBar = (ProgressBar) findViewById(R.id.movieDetailsProgressBar);
-        TextView mMovieTitleTV = (TextView) findViewById(R.id.collapsingToolbarTitle);
+        VolleyNetworkRequest volley = VolleyNetworkRequest.getInstance();
+        imageLoader = volley.getImageLoader();
+        mProgressBar = (ProgressBar) findViewById(R.id.movieDetailsProgressBar);
+        mMovieTitleTV = (TextView) findViewById(R.id.collapsingToolbarTitle);
         mBackdrop = (ImageView) findViewById(R.id.backdrop);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         Intent intent = getIntent();
         String movieId = intent.getStringExtra(AppConstants.MOVIE_ID);
         String movieTitle = intent.getStringExtra(AppConstants.MOVIE_TITLE);
         if ((movieTitle != null) && (movieId != null)) {
             String title = movieTitle.replaceAll(" ", "%20");
             mMovieTitleTV.setText(movieTitle);
-            // VolleyNetworkRequest.getInstance().makeNetworkRequest(AppConstants.getMovieDetailsUrl(movieId),this);
-            VolleyNetworkRequest.getInstance().makeNetworkRequest(AppConstants.getMovieBackdropUrl(getString(R.string.mdb_api_key), title),MovieImagesResponse.class, this, mProgressBar);
+            VolleyNetworkRequest.getInstance().makeNetworkRequest(AppConstants.getMovieBackdropUrl(getString(R.string.mdb_api_key), title), MovieImagesResponse.class, this, mProgressBar);
 
         }
     }
-
 
     private void displayBackdrop(MovieImagesResponse movieImagesResponse) {
         if (movieImagesResponse.getResults() != null && movieImagesResponse.getResults().size() > 0) {

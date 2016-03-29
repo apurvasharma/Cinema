@@ -30,8 +30,8 @@ public class UpcomingMoviesListAdapter extends  RecyclerView.Adapter<UpcomingMov
     UpcomingItemClickListener mItemClickListener;
 
     public UpcomingMoviesListAdapter() {
-        VolleyNetworkRequest.VolleySingleton volleySingleton = VolleyNetworkRequest.VolleySingleton.getInstance();
-        imageLoader = volleySingleton.getImageLoader();
+        VolleyNetworkRequest volley = VolleyNetworkRequest.getInstance();
+        imageLoader = volley.getImageLoader();
     }
 
     public interface UpcomingItemClickListener {
@@ -50,57 +50,9 @@ public class UpcomingMoviesListAdapter extends  RecyclerView.Adapter<UpcomingMov
 
     @Override
     public void onBindViewHolder(final MoviesComingSoonViewHolder holder, int position) {
+        MovieListResponse.Movies movie = upcomingMovieList.get(position);
+        holder.bind(movie);
 
-        MovieListResponse.Movies movies = upcomingMovieList.get(position);
-
-        //set title
-        holder.movieTitle.setText(movies.getTitle());
-
-        //set release Date
-        String releaseDate = AppUtils.changeDateFormat(movies.getReleaseDates().getTheater());
-        holder.movieReleaseDate.setText(releaseDate);
-
-        //convert user-rating out of 10
-        double score = movies.getRatings().getAudienceScore();
-        float userRating = (float) ((score / 100) * 10);
-        String rating = "" + userRating;
-        holder.movieRating.setText(rating);
-
-        //set actors
-        String actors = "";
-        if (movies.abridgedCast != null && movies.abridgedCast.size() > 0) {
-            actors = actors.concat(movies.abridgedCast.get(0).getName());
-            if(movies.abridgedCast.size() >= 2)
-                actors = actors.concat(", "+movies.abridgedCast.get(1).getName());
-
-        }
-        holder.movieActors.setText(actors);
-
-        //load thumbnail from JSON image URL
-        String imageURL = movies.getPosters().getThumbnail();
-
-
-
-        if (imageURL != null) {
-            imageLoader.get(imageURL, new ImageLoader.ImageListener() {
-                @Override
-                public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
-                    if (response.getBitmap() != null) {
-                        holder.movieImage.setImageBitmap(response.getBitmap());
-                    } else {
-                        holder.movieImage.setImageBitmap(null);
-
-                    }
-                }
-
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Log.d(logTAG, "VolleyError");
-                }
-            });
-        } else {
-            Log.d(logTAG, "image url is Null");
-        }
     }
 
     @Override
@@ -141,6 +93,55 @@ public class UpcomingMoviesListAdapter extends  RecyclerView.Adapter<UpcomingMov
             if (mItemClickListener != null) {
                 int position = getAdapterPosition();
                 mItemClickListener.onItemClick(itemView, position);
+            }
+        }
+
+        public void bind(MovieListResponse.Movies movie) {
+            //set title
+           movieTitle.setText(movie.getTitle());
+
+            //set release Date
+            String releaseDate = AppUtils.changeDateFormat(movie.getReleaseDates().getTheater());
+           movieReleaseDate.setText(releaseDate);
+
+            //convert user-rating out of 10
+            double score = movie.getRatings().getAudienceScore();
+            float userRating = (float) ((score / 100) * 10);
+            String rating = "" + userRating;
+           movieRating.setText(rating);
+
+            //set actors
+            String actors = "";
+            if (movie.abridgedCast != null && movie.abridgedCast.size() > 0) {
+                actors = actors.concat(movie.abridgedCast.get(0).getName());
+                if (movie.abridgedCast.size() >= 2)
+                    actors = actors.concat(", " + movie.abridgedCast.get(1).getName());
+
+            }
+           movieActors.setText(actors);
+
+            //load thumbnail from JSON image URL
+            String imageURL = movie.getPosters().getThumbnail();
+
+
+            if (imageURL != null) {
+                imageLoader.get(imageURL, new ImageLoader.ImageListener() {
+                    @Override
+                    public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
+                        if (response.getBitmap() != null) {
+                           movieImage.setImageBitmap(response.getBitmap());
+                        } else {
+                           movieImage.setImageBitmap(null);
+                        }
+                    }
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d(logTAG, "VolleyError");
+                    }
+                });
+            } else {
+                Log.d(logTAG, "image url is Null");
             }
         }
     }

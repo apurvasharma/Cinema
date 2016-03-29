@@ -29,19 +29,35 @@ public class VolleyNetworkRequest {
     private RequestQueue mRequestQueue;
     private Gson mGson;
     private Object mPojoClass;
-    public static VolleyNetworkRequest volleyNetworkRequest;
-
-    private VolleyNetworkRequest() {
-        mRequestQueue = VolleySingleton.getInstance().getRequestQueue();
-        mGson = new Gson();
-    }
+    private ImageLoader mImageLoader;
+    private static VolleyNetworkRequest singleInstance = null;
 
     public static VolleyNetworkRequest getInstance() {
-        if (volleyNetworkRequest == null)
-            volleyNetworkRequest = new VolleyNetworkRequest();
-        return volleyNetworkRequest;
+        if (singleInstance == null)
+            singleInstance = new VolleyNetworkRequest();
+        return singleInstance;
     }
 
+
+
+    private VolleyNetworkRequest() {
+        mGson = new Gson();
+        mRequestQueue = Volley.newRequestQueue(CinemaApplication.getAppContext());
+        mImageLoader = new ImageLoader(mRequestQueue, new ImageLoader.ImageCache() {
+
+            private LruCache<String, Bitmap> cache = new LruCache<>((int) (Runtime.getRuntime().maxMemory() / 1024) / 8);
+
+            @Override
+            public Bitmap getBitmap(String url) {
+                return cache.get(url);
+            }
+
+            @Override
+            public void putBitmap(String url, Bitmap bitmap) {
+                cache.put(url, bitmap);
+            }
+        });
+    }
 
     public void makeNetworkRequest(final String URL, final Object responseClass, final IVolleyNetworkResponse volleyNetworkResponse, final ProgressBar progressBar) {
         // Request a string response from the given URL.
@@ -94,49 +110,10 @@ public class VolleyNetworkRequest {
     }
 
 
-    /**
-     * Created by Apurva on 11/29/2015.
-     */
-    private static class VolleySingleton {
-        private static VolleySingleton singleInstance = null;
-        private RequestQueue requestQueue;
-        private ImageLoader imageLoader;
-
-
-        private VolleySingleton() {
-            requestQueue = Volley.newRequestQueue(CinemaApplication.getAppContext());
-            imageLoader = new ImageLoader(requestQueue, new ImageLoader.ImageCache() {
-
-                private LruCache<String, Bitmap> cache = new LruCache<>((int) (Runtime.getRuntime().maxMemory() / 1024) / 8);
-
-                @Override
-                public Bitmap getBitmap(String url) {
-                    return cache.get(url);
-                }
-
-                @Override
-                public void putBitmap(String url, Bitmap bitmap) {
-                    cache.put(url, bitmap);
-                }
-            });
-        }
-
-        public static VolleySingleton getInstance() {
-            if (singleInstance == null)
-                singleInstance = new VolleySingleton();
-            return singleInstance;
-        }
-
-
-        public RequestQueue getRequestQueue() {
-            return requestQueue;
-        }
-
-
         public ImageLoader getImageLoader() {
-            return imageLoader;
+            return mImageLoader;
         }
 
 
     }
-}
+
