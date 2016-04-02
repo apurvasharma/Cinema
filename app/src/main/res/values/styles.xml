@@ -60,13 +60,13 @@
         <item name="android:transitionName">@string/element_transition_name</item>
         <item name="android:maxLines">2</item>
         <item name="android:paddingTop">2dp</item>
-        <item name="android:layout_marginRight">18dp</item>
+        <item name="android:layout_marginRight">@dimen/layout_margin_padding</item>
         <!--<item name="android:lines">3</item>-->
         <item name="android:ellipsize">end</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/colorPrimaryText</item>
-        <item name="android:layout_marginLeft">18dp</item>
+        <item name="android:layout_marginLeft">@dimen/layout_margin_padding</item>
         <!--<item name="android:textSize">20sp</item>-->
     </style>
 
@@ -76,9 +76,8 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/colorSecondaryText</item>
         <item name="android:textAppearance">?attr/textAppearanceListItemSmall</item>
-        <item name="android:layout_marginRight">18dp</item>
-        <item name="android:paddingTop">5dp</item>
-        <item name="android:layout_marginLeft">18dp</item>
+        <item name="android:layout_marginRight">@dimen/layout_margin_padding</item>
+        <item name="android:layout_marginLeft">@dimen/layout_margin_padding</item>
     </style>
 
     <style name="list_item_ratingBar" parent="android:Widget.Holo.Light.RatingBar.Small" >
@@ -90,13 +89,14 @@
         <item name="android:secondaryProgressTint">@color/ratingBarStarColor</item>
         <item name="android:stepSize">0.25</item>
         <item name="android:paddingTop">5dp</item>
+        <item name="android:paddingBottom">2dp</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginRight">5dp</item>
     </style>
 
     <style name="list_item_rating">
-        <item name="android:layout_marginLeft">18dp</item>
+        <item name="android:layout_marginLeft">@dimen/layout_margin_padding</item>
         <item name="android:textSize">14sp</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -114,6 +114,15 @@
         <!-- specify shared element transitions -->
         <item name="android:windowSharedElementEnterTransition">@android:transition/move</item>
         <item name="android:windowSharedElementExitTransition">@android:transition/move</item>
+    </style>
+
+    <style name="collapsingToolbarStyle">android:layout_width="match_parent"
+        <item name="android:layout_height">match_parent</item>
+         <item name="app:layout_scrollFlags">scroll|exitUntilCollapsed</item>
+        <item name="android:fitsSystemWindows">true</item>
+         <item name="app:contentScrim">?attr/colorPrimary</item>
+        <item name="app:expandedTitleMarginStart">48dp</item>
+        <item name="app:expandedTitleMarginEnd">64dp</item>
     </style>
 
 </resources>
