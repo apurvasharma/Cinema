@@ -87,7 +87,7 @@ public class VolleyNetworkRequest {
             public void onErrorResponse(VolleyError error) {
                 //stop progress bar
                 progressBar.setVisibility(View.GONE);
-                Toast.makeText(CinemaApplication.getAppContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(CinemaApplication.getAppContext(), error.getLocalizedMessage(), Toast.LENGTH_LONG).show();
 
                 NetworkResponse networkResponse = error.networkResponse;
                 if (networkResponse != null) {

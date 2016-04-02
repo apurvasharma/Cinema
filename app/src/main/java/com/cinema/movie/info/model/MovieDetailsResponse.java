@@ -20,11 +20,6 @@ public class MovieDetailsResponse {
     @SerializedName("title")
     @Expose
     public String title;
-
-    public String getTitle() {
-        return title;
-    }
-
     @SerializedName("year")
     @Expose
     public int year;
@@ -80,6 +75,9 @@ public class MovieDetailsResponse {
         @Expose
         public List<String> characters = new ArrayList<String>();
 
+        public String getName() {
+            return name;
+        }
     }
 
 
@@ -89,6 +87,9 @@ public class MovieDetailsResponse {
         @Expose
         public String name;
 
+        public String getName() {
+            return name;
+        }
     }
 
     public class AlternateIds {
@@ -163,6 +164,70 @@ public class MovieDetailsResponse {
         @Expose
         public String dvd;
 
+    }
+
+    public int getRuntime() {
+        return runtime;
+    }
+
+    public List<String> getGenres() {
+        return genres;
+    }
+
+    public ReleaseDates getReleaseDates() {
+        return releaseDates;
+    }
+
+    public Ratings getRatings() {
+        return ratings;
+    }
+
+    public String getSynopsis() {
+        return synopsis;
+    }
+
+    public List<AbridgedCast> getAbridgedCast() {
+        return abridgedCast;
+    }
+
+    public List<AbridgedDirector> getAbridgedDirectors() {
+        return abridgedDirectors;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public String getMpaaRating() {
+        return mpaaRating;
+    }
+
+    public String getCriticsConsensus() {
+        return criticsConsensus;
+    }
+
+    public Posters getPosters() {
+        return posters;
+    }
+
+    public String getStudio() {
+        return studio;
+    }
+
+    public AlternateIds getAlternateIds() {
+        return alternateIds;
+    }
+
+    public Links getLinks() {
+        return links;
+    }
+
+    public String getTitle() {
+        return title;
     }
 
 }

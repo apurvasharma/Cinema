@@ -19,8 +19,8 @@ public class AppConstants {
     }
 
 
-    public static String getMovieDetailsUrl(String movieId) {
-        return "http://api.rottentomatoes.com/api/public/v1.0/movies/" + movieId + ".json?apikey=";
+    public static String getMovieDetailsUrl(String apiKey,String movieId) {
+        return "http://api.rottentomatoes.com/api/public/v1.0/movies/" + movieId + ".json?apikey="+apiKey;
     }
 
     public static String getThumbnailUrl(String posterPath) {

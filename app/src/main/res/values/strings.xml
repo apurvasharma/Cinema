@@ -6,4 +6,9 @@
 
     <string name="action_settings">Settings</string>
     <string name="element_transition_name">Movie title transition</string>
+    <string name="synopsis">Synopsis</string>
+    <string name="description">Description</string>
+    <string name="cast">Cast:</string>
+    <string name="director">Director:</string>
+    <string name="runtime">Runtime:</string>
 </resources>
