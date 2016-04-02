@@ -18,6 +18,8 @@
 
 ![alt tag](https://cloud.githubusercontent.com/assets/10542452/14227840/f00ba708-f8d3-11e5-8642-7221ec5f58db.png)
 
+![alt tag](https://cloud.githubusercontent.com/assets/10542452/14229072/327cd300-f8f7-11e5-9f8f-571479aff497.PNG)
+
 ![alt tag](https://cloud.githubusercontent.com/assets/10542452/14227853/576f98be-f8d4-11e5-9536-f0123c3b742d.png)
 
 **Please note**: I've added my API keys to gitignore file. Please use your api keys to make network request. I am using two APIs OMDb (Open Movie Database) and Rotten Tomatoes.
