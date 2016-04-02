@@ -16,7 +16,8 @@
 
 • Implemented Material Design UI using CoordinatorLayout, CollapsingToolbarLayout, Toolbar, FAB, CardView and Navigation drawer
 
-![alt tag](https://cloud.githubusercontent.com/assets/10542452/14229130/8b9c73d6-f8f8-11e5-8da9-dc64c55c1f5c.png)
+
+<img src="https://cloud.githubusercontent.com/assets/10542452/14229130/8b9c73d6-f8f8-11e5-8da9-dc64c55c1f5c.png" width="50">
 
 ![alt tag](https://cloud.githubusercontent.com/assets/10542452/14229072/327cd300-f8f7-11e5-9f8f-571479aff497.PNG)
 
