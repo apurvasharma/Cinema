@@ -16,6 +16,6 @@
 
 • Implemented Material Design UI using CoordinatorLayout, CollapsingToolbarLayout, Toolbar, FAB, CardView and Navigation drawer
 
-
+https://cloud.githubusercontent.com/assets/10542452/14227853/576f98be-f8d4-11e5-9536-f0123c3b742d.png
 
 **Please note**: I've added my API keys to gitignore file. Please use your api keys to make network request. I am using two APIs OMDb (Open Movie Database) and Rotten Tomatoes.
