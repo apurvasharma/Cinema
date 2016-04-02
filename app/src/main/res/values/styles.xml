@@ -116,13 +116,6 @@
         <item name="android:windowSharedElementExitTransition">@android:transition/move</item>
     </style>
 
-    <style name="collapsingToolbarStyle">android:layout_width="match_parent"
-        <item name="android:layout_height">match_parent</item>
-         <item name="app:layout_scrollFlags">scroll|exitUntilCollapsed</item>
-        <item name="android:fitsSystemWindows">true</item>
-         <item name="app:contentScrim">?attr/colorPrimary</item>
-        <item name="app:expandedTitleMarginStart">48dp</item>
-        <item name="app:expandedTitleMarginEnd">64dp</item>
-    </style>
+
 
 </resources>
