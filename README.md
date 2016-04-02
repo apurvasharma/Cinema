@@ -1,6 +1,6 @@
-# Cinema
+﻿# Cinema
 
-• Get the latest movies in theatre, latest show timings, list of upcoming movies and much more
+• Check out the latest movies in theatre, show timings, list of upcoming movies and much more
 
 • Designed, Developed and implemented complete architecture
 
