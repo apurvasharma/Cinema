@@ -6,7 +6,6 @@ import android.util.LruCache;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-
 import com.android.volley.NetworkError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
@@ -31,10 +30,12 @@ public class VolleyNetworkRequest {
     private Object mPojoClass;
     private ImageLoader mImageLoader;
     private static VolleyNetworkRequest singleInstance = null;
+    private static CinemaApplication applicationContext = CinemaApplication.getInstance();
 
     public static VolleyNetworkRequest getInstance() {
-        if (singleInstance == null)
+        if (singleInstance == null) {
             singleInstance = new VolleyNetworkRequest();
+        }
         return singleInstance;
     }
 
@@ -42,10 +43,10 @@ public class VolleyNetworkRequest {
 
     private VolleyNetworkRequest() {
         mGson = new Gson();
-        mRequestQueue = Volley.newRequestQueue(CinemaApplication.getAppContext());
+        mRequestQueue = Volley.newRequestQueue(applicationContext);
         mImageLoader = new ImageLoader(mRequestQueue, new ImageLoader.ImageCache() {
 
-            private LruCache<String, Bitmap> cache = new LruCache<>((int) (Runtime.getRuntime().maxMemory() / 1024) / 8);
+            private LruCache<String, Bitmap> cache = applicationContext.getMemoryCache();
 
             @Override
             public Bitmap getBitmap(String url) {
@@ -54,7 +55,9 @@ public class VolleyNetworkRequest {
 
             @Override
             public void putBitmap(String url, Bitmap bitmap) {
-                cache.put(url, bitmap);
+                if (getBitmap(url) == null) {
+                    cache.put(url, bitmap);
+                }
             }
         });
     }

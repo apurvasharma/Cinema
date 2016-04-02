@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
 import com.cinema.movie.info.R;
 import com.cinema.movie.info.model.MovieImagesResponse;
 import com.cinema.movie.info.network.IVolleyNetworkResponse;
@@ -21,7 +22,7 @@ import com.cinema.movie.info.utils.AppConstants;
  */
 public class MovieDetailsActivity extends AppCompatActivity implements IVolleyNetworkResponse {
     private ImageLoader imageLoader;
-    private ImageView mBackdrop;
+    private NetworkImageView mBackdrop;
     private ProgressBar mProgressBar;
     private TextView mMovieTitleTV;
 
@@ -34,7 +35,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements IVolleyNe
         imageLoader = volley.getImageLoader();
         mProgressBar = (ProgressBar) findViewById(R.id.movieDetailsProgressBar);
         mMovieTitleTV = (TextView) findViewById(R.id.collapsingToolbarTitle);
-        mBackdrop = (ImageView) findViewById(R.id.backdrop);
+        mBackdrop = (NetworkImageView) findViewById(R.id.backdrop);
     }
 
     @Override
@@ -54,22 +55,8 @@ public class MovieDetailsActivity extends AppCompatActivity implements IVolleyNe
     private void displayBackdrop(MovieImagesResponse movieImagesResponse) {
         if (movieImagesResponse.getResults() != null && movieImagesResponse.getResults().size() > 0) {
             String backdropPath = movieImagesResponse.getResults().get(0).getBackdropPath();
-            if (backdropPath != null) {
+            mBackdrop.setImageUrl(AppConstants.getPosterURl(backdropPath),imageLoader);
 
-                imageLoader.get(AppConstants.getPosterURl(backdropPath), new ImageLoader.ImageListener() {
-                    @Override
-                    public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
-                        if (response.getBitmap() != null) {
-                            mBackdrop.setImageBitmap(response.getBitmap());
-                        }
-                    }
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d("class", "VolleyError");
-                    }
-                });
-            }
         }
     }
 

@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
 import com.cinema.movie.info.R;
 import com.cinema.movie.info.model.MovieListResponse;
 import com.cinema.movie.info.network.VolleyNetworkRequest;
@@ -26,7 +27,7 @@ public class NewMoviesListAdapter extends  RecyclerView.Adapter<NewMoviesListAda
 
     private List<MovieListResponse.Movies> newMovieList = Collections.emptyList();
     private ImageLoader imageLoader;
-    private static final String logTAG = "NewMoviesListAdapter";
+    private static final String logTAG = NewMoviesListAdapter.class.getSimpleName();
     private InTheatersItemClickListener mItemClickListener;
 
     public NewMoviesListAdapter() {
@@ -56,7 +57,7 @@ public class NewMoviesListAdapter extends  RecyclerView.Adapter<NewMoviesListAda
     public void updateList(List<MovieListResponse.Movies> newMovieList) {
         //update the adapter to display the list of new movies
         this.newMovieList = newMovieList;
-        notifyDataSetChanged();
+      //  notifyDataSetChanged();
     }
 
 
@@ -71,7 +72,7 @@ public class NewMoviesListAdapter extends  RecyclerView.Adapter<NewMoviesListAda
     public class MoviesInTheaterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         public RelativeLayout itemContainer;
         public TextView movieTitle;
-        public ImageView movieImage;
+        public NetworkImageView movieImage;
         public TextView movieRating;
         public TextView movieReleaseDate;
         public TextView movieActors;
@@ -81,7 +82,7 @@ public class NewMoviesListAdapter extends  RecyclerView.Adapter<NewMoviesListAda
             super(itemView);
             movieRating = (TextView) itemView.findViewById(R.id.newMovieRating);
             movieTitle = (TextView) itemView.findViewById(R.id.newMovieTitle);
-            movieImage = (ImageView) itemView.findViewById(R.id.newMovieImage);
+            movieImage = (NetworkImageView) itemView.findViewById(R.id.newMovieImage);
             movieReleaseDate = (TextView) itemView.findViewById(R.id.newMovieReleaseDate);
             itemContainer = (RelativeLayout) itemView.findViewById(R.id.newMovieListItemContainer);
             movieActors = (TextView) itemView.findViewById(R.id.newMovieActors);
@@ -123,28 +124,7 @@ public class NewMoviesListAdapter extends  RecyclerView.Adapter<NewMoviesListAda
 
             //load thumbnail from JSON image URL
             String imageURL = movie.getPosters().getThumbnail();
-
-
-            if (imageURL != null) {
-                imageLoader.get(imageURL, new ImageLoader.ImageListener() {
-                    @Override
-                    public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
-                        if (response.getBitmap() != null) {
-                            movieImage.setImageBitmap(response.getBitmap());
-                        } else {
-                            movieImage.setImageBitmap(null);
-
-                        }
-                    }
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d(logTAG, "VolleyError");
-                    }
-                });
-            } else {
-                Log.d(logTAG, "image url is Null");
-            }
+            movieImage.setImageUrl(imageURL,imageLoader);
         }
     }
 

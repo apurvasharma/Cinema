@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
 import com.cinema.movie.info.R;
 import com.cinema.movie.info.model.MovieListResponse;
 import com.cinema.movie.info.network.VolleyNetworkRequest;
@@ -26,8 +27,8 @@ public class UpcomingMoviesListAdapter extends  RecyclerView.Adapter<UpcomingMov
 
     private List<MovieListResponse.Movies> upcomingMovieList = Collections.emptyList();
     private ImageLoader imageLoader;
-    private static final String logTAG = "UpcomingMoviesAdapter";
-    UpcomingItemClickListener mItemClickListener;
+    private static final String logTAG = UpcomingMoviesListAdapter.class.getSimpleName();
+    private UpcomingItemClickListener mItemClickListener;
 
     public UpcomingMoviesListAdapter() {
         VolleyNetworkRequest volley = VolleyNetworkRequest.getInstance();
@@ -72,7 +73,7 @@ public class UpcomingMoviesListAdapter extends  RecyclerView.Adapter<UpcomingMov
         // public int newMovieId;
         public RelativeLayout itemContainer;
         public TextView movieTitle;
-        public ImageView movieImage;
+        public NetworkImageView movieImage;
         public TextView movieRating;
         public TextView movieReleaseDate;
         public TextView movieActors;
@@ -81,7 +82,7 @@ public class UpcomingMoviesListAdapter extends  RecyclerView.Adapter<UpcomingMov
             super(itemView);
             movieRating = (TextView) itemView.findViewById(R.id.upcomingMovieRating);
             movieTitle = (TextView) itemView.findViewById(R.id.upcomingMovieTitle);
-            movieImage = (ImageView) itemView.findViewById(R.id.upcomingMovieImage);
+            movieImage = (NetworkImageView) itemView.findViewById(R.id.upcomingMovieImage);
             movieReleaseDate = (TextView) itemView.findViewById(R.id.upcomingMovieReleaseDate);
             itemContainer = (RelativeLayout) itemView.findViewById(R.id.upcomingMovieListItemContainer);
             movieActors = (TextView) itemView.findViewById(R.id.upcomingMovieActors);
@@ -122,27 +123,7 @@ public class UpcomingMoviesListAdapter extends  RecyclerView.Adapter<UpcomingMov
 
             //load thumbnail from JSON image URL
             String imageURL = movie.getPosters().getThumbnail();
-
-
-            if (imageURL != null) {
-                imageLoader.get(imageURL, new ImageLoader.ImageListener() {
-                    @Override
-                    public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
-                        if (response.getBitmap() != null) {
-                           movieImage.setImageBitmap(response.getBitmap());
-                        } else {
-                           movieImage.setImageBitmap(null);
-                        }
-                    }
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d(logTAG, "VolleyError");
-                    }
-                });
-            } else {
-                Log.d(logTAG, "image url is Null");
-            }
+            movieImage.setImageUrl(imageURL,imageLoader);
         }
     }
 }
