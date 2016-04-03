@@ -20,6 +20,7 @@ import com.cinema.movie.info.model.MovieDetailsResponse;
 import com.cinema.movie.info.model.MovieImagesResponse;
 import com.cinema.movie.info.model.MovieListResponse;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 /**
  * Created by Apurva on 2/22/2016.
@@ -72,14 +73,20 @@ public class VolleyNetworkRequest {
                         //stop progress bar
                         progressBar.setVisibility(View.GONE);
                         mPojoClass = responseClass;
-                        if (mPojoClass == MovieImagesResponse.class)
-                            mPojoClass = mGson.fromJson(response, MovieImagesResponse.class);
-                        else if (mPojoClass == MovieListResponse.class)
-                            mPojoClass = mGson.fromJson(response, MovieListResponse.class);
-                        else if (mPojoClass == MovieDetailsResponse.class)
-                            mPojoClass = mGson.fromJson(response, MovieDetailsResponse.class);
+                        try {
+                            if (mPojoClass == MovieImagesResponse.class)
+                                mPojoClass = mGson.fromJson(response, MovieImagesResponse.class);
+                            else if (mPojoClass == MovieListResponse.class)
+                                mPojoClass = mGson.fromJson(response, MovieListResponse.class);
+                            else if (mPojoClass == MovieDetailsResponse.class)
+                                mPojoClass = mGson.fromJson(response, MovieDetailsResponse.class);
 
-                        volleyNetworkResponse.processNetworkResponse(mPojoClass);
+                            volleyNetworkResponse.processNetworkResponse(mPojoClass);
+                        }catch (JsonSyntaxException ex){
+                            ex.printStackTrace();
+                            Toast.makeText(CinemaApplication.getAppContext(), "Error while loading movie details", Toast.LENGTH_LONG).show();
+
+                        }
                         Log.d("response = ", response);
                     }
                 }, new Response.ErrorListener() {

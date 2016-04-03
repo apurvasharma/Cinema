@@ -57,7 +57,7 @@ public class NewMoviesListAdapter extends  RecyclerView.Adapter<NewMoviesListAda
     public void updateList(List<MovieListResponse.Movies> newMovieList) {
         //update the adapter to display the list of new movies
         this.newMovieList = newMovieList;
-      //  notifyDataSetChanged();
+       notifyDataSetChanged();
     }
 
 
