@@ -63,7 +63,7 @@ public class VolleyNetworkRequest {
         });
     }
 
-    public void makeNetworkRequest(final String URL, final Object responseClass, final IVolleyNetworkResponse volleyNetworkResponse, final ProgressBar progressBar) {
+    public void makeNetworkRequest(final String URL, final Object responseClass, final IVolleyNetworkResponse volleyNetworkResponse, final ProgressBar progressBar, String tag) {
         // Request a string response from the given URL.
         progressBar.setVisibility(View.VISIBLE);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URL,
@@ -113,6 +113,8 @@ public class VolleyNetworkRequest {
             }
         });
 
+        //Add tag to request, which can be used to cancel the request in future
+        stringRequest.setTag(tag);
         // Add the request to the Volley RequestQueue
         mRequestQueue.add(stringRequest);
 
@@ -125,5 +127,10 @@ public class VolleyNetworkRequest {
         }
 
 
+    public void cancelPendingRequest(String TAG) {
+        if (mRequestQueue != null) {
+            mRequestQueue.cancelAll(TAG);
+        }
     }
+}
 

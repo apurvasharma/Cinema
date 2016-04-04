@@ -16,8 +16,8 @@ import android.widget.ProgressBar;
 import com.cinema.movie.info.R;
 import com.cinema.movie.info.adapter.UpcomingMoviesListAdapter;
 import com.cinema.movie.info.model.MovieListResponse;
-import com.cinema.movie.info.network.VolleyNetworkRequest;
 import com.cinema.movie.info.network.IVolleyNetworkResponse;
+import com.cinema.movie.info.network.VolleyNetworkRequest;
 import com.cinema.movie.info.utils.AppConstants;
 
 import java.util.Collections;
@@ -32,7 +32,7 @@ public class UpcomingMoviesFragment extends Fragment implements IVolleyNetworkRe
 
     private List<MovieListResponse.Movies> mMovieList = Collections.emptyList();
     private UpcomingMoviesListAdapter mListAdapter;
-
+    private static final String VOLLEY_TAG_FOR_UPCOMING_MOVIES = "VOLLEY_TAG_FOR_UPCOMING_MOVIES";
     public UpcomingMoviesFragment(UpcomingMoviesListAdapter listAdapter) {
         mListAdapter = listAdapter;
     }
@@ -51,7 +51,7 @@ public class UpcomingMoviesFragment extends Fragment implements IVolleyNetworkRe
        // mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         mRecyclerView.setAdapter(mListAdapter);
         mListAdapter.setOnItemClickListener(onItemClickListener);
-        VolleyNetworkRequest.getInstance().makeNetworkRequest(AppConstants.UPCOMING_MOVIES_URL.concat(getString(R.string.rt_api_key)), MovieListResponse.class, this, mProgressBar);
+        VolleyNetworkRequest.getInstance().makeNetworkRequest(AppConstants.UPCOMING_MOVIES_URL.concat(getString(R.string.rt_api_key)), MovieListResponse.class, this, mProgressBar, VOLLEY_TAG_FOR_UPCOMING_MOVIES);
         return view;
     }
 
@@ -80,6 +80,12 @@ public class UpcomingMoviesFragment extends Fragment implements IVolleyNetworkRe
             mMovieList = ((MovieListResponse) pojoClass).getMovies();
             mListAdapter.updateList(mMovieList);
         }
-
     }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        VolleyNetworkRequest.getInstance().cancelPendingRequest(VOLLEY_TAG_FOR_UPCOMING_MOVIES);
+    }
+
 }

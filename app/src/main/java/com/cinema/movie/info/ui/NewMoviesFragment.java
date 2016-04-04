@@ -16,8 +16,8 @@ import android.widget.ProgressBar;
 import com.cinema.movie.info.R;
 import com.cinema.movie.info.adapter.NewMoviesListAdapter;
 import com.cinema.movie.info.model.MovieListResponse;
-import com.cinema.movie.info.network.VolleyNetworkRequest;
 import com.cinema.movie.info.network.IVolleyNetworkResponse;
+import com.cinema.movie.info.network.VolleyNetworkRequest;
 import com.cinema.movie.info.utils.AppConstants;
 
 import java.util.Collections;
@@ -32,7 +32,7 @@ public class NewMoviesFragment extends Fragment implements IVolleyNetworkRespons
 
     private List<MovieListResponse.Movies> mMovieList = Collections.emptyList();
     private NewMoviesListAdapter mListAdapter;
-    private ProgressBar mProgressBar;
+    private static final String VOLLEY_TAG_FOR_NEW_MOVIES = "VOLLEY_TAG_FOR_NEW_MOVIES";
     public NewMoviesFragment(NewMoviesListAdapter listAdapter) {
         mListAdapter = listAdapter;
     }
@@ -41,7 +41,7 @@ public class NewMoviesFragment extends Fragment implements IVolleyNetworkRespons
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.new_movie_list_fragment, container, false);
 
-        mProgressBar = (ProgressBar) view.findViewById(R.id.newMovieProgressBar);
+        ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.newMovieProgressBar);
 
         RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.newMoviesRecyclerView);
       //  mRecyclerView.addItemDecoration(new SimpleDividerItemDecoration(getResources()));
@@ -51,7 +51,7 @@ public class NewMoviesFragment extends Fragment implements IVolleyNetworkRespons
         // mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         mRecyclerView.setAdapter(mListAdapter);
         mListAdapter.setOnItemClickListener(onItemClickListener);
-        VolleyNetworkRequest.getInstance().makeNetworkRequest(AppConstants.NEW_MOVIES_URL.concat(getString(R.string.rt_api_key)), MovieListResponse.class, this, mProgressBar);
+        VolleyNetworkRequest.getInstance().makeNetworkRequest(AppConstants.NEW_MOVIES_URL.concat(getString(R.string.rt_api_key)), MovieListResponse.class, this, progressBar,VOLLEY_TAG_FOR_NEW_MOVIES);
         return view;
     }
 
@@ -81,5 +81,11 @@ public class NewMoviesFragment extends Fragment implements IVolleyNetworkRespons
             mMovieList = ((MovieListResponse) pojoClass).getMovies();
             mListAdapter.updateList(mMovieList);
         }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        VolleyNetworkRequest.getInstance().cancelPendingRequest(VOLLEY_TAG_FOR_NEW_MOVIES);
     }
 }

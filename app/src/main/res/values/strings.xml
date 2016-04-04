@@ -11,4 +11,6 @@
     <string name="cast">Cast:</string>
     <string name="director">Director:</string>
     <string name="runtime">Runtime:</string>
+    <string name="hours">"h "</string>
+    <string name="mins">m</string>
 </resources>

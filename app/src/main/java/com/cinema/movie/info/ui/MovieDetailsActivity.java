@@ -24,6 +24,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements IVolleyNe
     private ImageLoader imageLoader;
     private NetworkImageView mBackdrop;
     private ProgressBar mProgressBar;
+    private static final String VOLLEY_TAG_FOR_MOVIE_DETAILS= "VOLLEY_TAG_FOR_MOVIE_DETAILS";
     private TextView mMovieTitleTV, mSynopsis, mCast, mDirector, mRuntime, mReviews;
     private static final String comma = ", ";
 
@@ -55,8 +56,8 @@ public class MovieDetailsActivity extends AppCompatActivity implements IVolleyNe
         if ((movieTitle != null) && (movieId != null)) {
             String title = movieTitle.replaceAll(" ", "%20");
             mMovieTitleTV.setText(movieTitle);
-            VolleyNetworkRequest.getInstance().makeNetworkRequest(AppConstants.getMovieBackdropUrl(getString(R.string.mdb_api_key), title), MovieImagesResponse.class, this, mProgressBar);
-            VolleyNetworkRequest.getInstance().makeNetworkRequest(AppConstants.getMovieDetailsUrl(getString(R.string.rt_api_key), movieId), MovieDetailsResponse.class, this, mProgressBar);
+            VolleyNetworkRequest.getInstance().makeNetworkRequest(AppConstants.getMovieBackdropUrl(getString(R.string.mdb_api_key), title), MovieImagesResponse.class, this, mProgressBar, VOLLEY_TAG_FOR_MOVIE_DETAILS);
+            VolleyNetworkRequest.getInstance().makeNetworkRequest(AppConstants.getMovieDetailsUrl(getString(R.string.rt_api_key), movieId), MovieDetailsResponse.class, this, mProgressBar, VOLLEY_TAG_FOR_MOVIE_DETAILS);
         }
     }
 
@@ -103,11 +104,16 @@ public class MovieDetailsActivity extends AppCompatActivity implements IVolleyNe
 
         mDirector.setText(director.toString());
         StringBuilder runtime = new StringBuilder();
-        int hours = movie.getRuntime() / 60; //since both are ints, you get an int
+        int hours = movie.getRuntime() / 60;
         int minutes = movie.getRuntime() % 60;
-        runtime.append(hours).append("h ").append(minutes).append("m");
+        runtime.append(hours).append(getString(R.string.hours)).append(minutes).append(getString(R.string.mins));
         mRuntime.setText(runtime.toString());
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        VolleyNetworkRequest.getInstance().cancelPendingRequest(VOLLEY_TAG_FOR_MOVIE_DETAILS);
+    }
 
 }
