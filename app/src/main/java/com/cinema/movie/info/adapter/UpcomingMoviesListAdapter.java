@@ -105,11 +105,9 @@ public class UpcomingMoviesListAdapter extends  RecyclerView.Adapter<UpcomingMov
             String releaseDate = AppUtils.changeDateFormat(movie.getReleaseDates().getTheater());
            movieReleaseDate.setText(releaseDate);
 
-            //convert user-rating out of 10
-            double score = movie.getRatings().getAudienceScore();
-            float userRating = (float) ((score / 100) * 10);
-            String rating = "" + userRating;
-           movieRating.setText(rating);
+            String rating = AppUtils.getRating(movie.getRatings().getAudienceScore());
+            movieRating.setText(rating);
+
 
             //set actors
             String actors = "";

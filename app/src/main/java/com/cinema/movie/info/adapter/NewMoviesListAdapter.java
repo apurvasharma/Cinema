@@ -101,10 +101,7 @@ public class NewMoviesListAdapter extends  RecyclerView.Adapter<NewMoviesListAda
             //set title
             movieTitle.setText(movie.getTitle());
 
-            //convert user-rating out of 10
-            double score = movie.getRatings().getAudienceScore();
-            float userRating = (float) ((score / 100) * 10);
-            String rating = "" + userRating;
+            String rating = AppUtils.getRating(movie.getRatings().getAudienceScore());
             movieRating.setText(rating);
 
 

@@ -31,7 +31,7 @@
 
             <TextView
                 android:id="@+id/upcomingMovieRating"
-                style="@style/list_item_rating"
+                style="@style/list_item_rating_number"
                 android:layout_below="@+id/upcomingMovieTitle"
                 android:layout_toEndOf="@+id/upcomingMovieImage" />
 

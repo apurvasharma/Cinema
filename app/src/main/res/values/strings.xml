@@ -13,4 +13,5 @@
     <string name="runtime">Runtime:</string>
     <string name="hours">"h "</string>
     <string name="mins">m</string>
+    <string name="genre">Genre:</string>
 </resources>

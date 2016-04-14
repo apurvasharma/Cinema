@@ -16,6 +16,7 @@ import java.util.Locale;
  */
 public class AppUtils {
     private static Gson gson = new Gson();
+    private static String sMovieRuntime;
 
 
     /**
@@ -64,4 +65,15 @@ public class AppUtils {
     }
 
 
+    public static String getRating(double score) {
+        //convert user-rating out of 10
+        float userRating = (float) ((score / 100) * 10);
+        return "" + userRating;
+    }
+
+    public static String getMovieRuntime(int runtime) {
+        int hours = runtime / 60;
+        int minutes = runtime % 60;
+        return String.valueOf(hours) + "h " + minutes + "m";
+    }
 }

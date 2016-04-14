@@ -13,6 +13,7 @@ public class AppConstants {
     public static final String MOVIE_TITLE = "movie title";
     public static final String IMAGE_URL = "https://image.tmdb.org/t/p/original";
     public static final String MOVIE_BACKDROP = "movie backdrop";
+    public static final String MOVIE_RATING = "movie rating";
 
     public static String getSearchMoviePosterUrl(String apiKey, String movieName) {
         return SEARCH_MOVIE_POSTER_URL + apiKey + "&query=" + movieName;

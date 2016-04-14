@@ -153,6 +153,9 @@ public class MovieDetailsResponse {
         @Expose
         public int audienceScore;
 
+        public int getAudienceScore() {
+            return audienceScore;
+        }
     }
 
     public class ReleaseDates {

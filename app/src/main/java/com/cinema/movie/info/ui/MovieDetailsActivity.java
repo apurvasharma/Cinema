@@ -14,6 +14,7 @@ import com.cinema.movie.info.model.MovieImagesResponse;
 import com.cinema.movie.info.network.IVolleyNetworkResponse;
 import com.cinema.movie.info.network.VolleyNetworkRequest;
 import com.cinema.movie.info.utils.AppConstants;
+import com.cinema.movie.info.utils.AppUtils;
 
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements IVolleyNe
     private NetworkImageView mBackdrop;
     private ProgressBar mProgressBar;
     private static final String VOLLEY_TAG_FOR_MOVIE_DETAILS= "VOLLEY_TAG_FOR_MOVIE_DETAILS";
-    private TextView mMovieTitleTV, mSynopsis, mCast, mDirector, mRuntime, mReviews;
+    private TextView mMovieTitleTV, mSynopsis, mCast, mDirector, mRuntime, mGenre, mRating;
     private static final String comma = ", ";
 
 
@@ -44,7 +45,8 @@ public class MovieDetailsActivity extends AppCompatActivity implements IVolleyNe
         mCast = (TextView) findViewById(R.id.cast_info);
         mDirector = (TextView) findViewById(R.id.director_info);
         mRuntime = (TextView) findViewById(R.id.runtime_info);
-        mReviews = (TextView) findViewById(R.id.reviews);
+        mRating = (TextView) findViewById(R.id.movieDetailRating);
+        mGenre = (TextView) findViewById(R.id.genre_info);
     }
 
     @Override
@@ -83,6 +85,9 @@ public class MovieDetailsActivity extends AppCompatActivity implements IVolleyNe
     }
 
     private void displayMovieDetails(MovieDetailsResponse movie) {
+        String rating = AppUtils.getRating(movie.getRatings().getAudienceScore());
+        mRating.setText(rating);
+
         mSynopsis.setText(movie.getSynopsis());
         List<MovieDetailsResponse.AbridgedCast> castList = movie.getAbridgedCast();
         StringBuilder cast = new StringBuilder();
@@ -95,19 +100,26 @@ public class MovieDetailsActivity extends AppCompatActivity implements IVolleyNe
         mCast.setText(cast.toString());
         StringBuilder director = new StringBuilder();
         List<MovieDetailsResponse.AbridgedDirector> directorList = movie.getAbridgedDirectors();
-            for(int i=0;i<directorList.size();i++){
+        for (int i = 0; i < directorList.size(); i++) {
                 director.append(directorList.get(i).getName());
                 if(i!=directorList.size()-1){
                     director.append(comma);
                 }
-            }
+        }
 
         mDirector.setText(director.toString());
-        StringBuilder runtime = new StringBuilder();
-        int hours = movie.getRuntime() / 60;
-        int minutes = movie.getRuntime() % 60;
-        runtime.append(hours).append(getString(R.string.hours)).append(minutes).append(getString(R.string.mins));
-        mRuntime.setText(runtime.toString());
+        String runtime = AppUtils.getMovieRuntime(movie.getRuntime());
+        mRuntime.setText(runtime);
+
+        List<String> genreList = movie.getGenres();
+        StringBuilder genre = new StringBuilder();
+        for (int i = 0; i < genreList.size(); i++) {
+            genre.append(genreList.get(i));
+            if (i != genreList.size() - 1) {
+                genre.append(comma);
+            }
+        }
+        mGenre.setText(genre.toString());
     }
 
     @Override

@@ -35,7 +35,7 @@
                 android:id="@+id/newMovieRating"
                 android:layout_toEndOf="@+id/newMovieImage"
                 android:layout_below="@+id/newMovieTitle"
-                style="@style/list_item_rating" />
+                style="@style/list_item_rating_number" />
 
             <RatingBar
                 android:id="@+id/newMovieRatingBar"
