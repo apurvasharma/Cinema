@@ -12,6 +12,10 @@ public class CinemaApplication extends Application {
     private static CinemaApplication singleInstance;
     private LruCache<String, Bitmap> mMemoryCache;
 
+    private CinemaApplication(){
+
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
